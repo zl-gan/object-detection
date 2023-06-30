@@ -1,0 +1,1059 @@
+--------- config parameters ----------
+{
+    "arch_params": {
+        "schema": null
+    },
+    "checkpoint_params": {
+        "load_checkpoint": false,
+        "schema": null
+    },
+    "training_hyperparams": {
+        "lr_warmup_epochs": 0,
+        "lr_warmup_steps": 10,
+        "lr_cooldown_epochs": 0,
+        "warmup_initial_lr": 1e-06,
+        "cosine_final_lr_ratio": 0.1,
+        "optimizer": "SGD",
+        "optimizer_params": {},
+        "criterion_params": {},
+        "ema": true,
+        "batch_accumulate": 1,
+        "ema_params": {
+            "decay": 0.9997,
+            "decay_type": "threshold",
+            "beta": 15
+        },
+        "zero_weight_decay_on_bias_and_bn": true,
+        "load_opt_params": true,
+        "run_validation_freq": 1,
+        "save_model": true,
+        "metric_to_watch": "mAP@0.50",
+        "launch_tensorboard": false,
+        "tb_files_user_prompt": false,
+        "silent_mode": false,
+        "mixed_precision": false,
+        "tensorboard_port": null,
+        "save_ckpt_epoch_list": [
+            25,
+            50,
+            75,
+            100,
+            125,
+            150
+        ],
+        "average_best_models": true,
+        "dataset_statistics": false,
+        "save_tensorboard_to_s3": false,
+        "lr_schedule_function": null,
+        "train_metrics_list": [],
+        "valid_metrics_list": [
+            {
+                "DetectionMetrics": {
+                    "score_thres": 0.1,
+                    "top_k_predictions": 300,
+                    "num_cls": 13,
+                    "normalize_targets": true,
+                    "post_prediction_callback": "PPYoloEPostPredictionCallback()"
+                }
+            },
+            {
+                "DetectionMetrics_050": {
+                    "score_thres": 0.1,
+                    "top_k_predictions": 300,
+                    "num_cls": 13,
+                    "normalize_targets": true,
+                    "post_prediction_callback": "PPYoloEPostPredictionCallback()"
+                }
+            }
+        ],
+        "greater_metric_to_watch_is_better": true,
+        "precise_bn": false,
+        "precise_bn_batch_size": null,
+        "seed": 42,
+        "lr_mode": "cosine",
+        "phase_callbacks": [],
+        "log_installed_packages": true,
+        "sg_logger": "base_sg_logger",
+        "sg_logger_params": {
+            "tb_files_user_prompt": false,
+            "project_name": "",
+            "launch_tensorboard": false,
+            "tensorboard_port": null,
+            "save_checkpoints_remote": false,
+            "save_tensorboard_remote": false,
+            "save_logs_remote": false,
+            "monitor_system": true
+        },
+        "warmup_mode": "linear_batch_step",
+        "step_lr_update_freq": null,
+        "lr_updates": [],
+        "clip_grad_norm": null,
+        "pre_prediction_callback": null,
+        "ckpt_best_name": "ckpt_best.pth",
+        "enable_qat": false,
+        "resume": false,
+        "resume_path": null,
+        "ckpt_name": "ckpt_latest.pth",
+        "resume_strict_load": false,
+        "sync_bn": true,
+        "kill_ddp_pgroup_on_end": true,
+        "max_train_batches": null,
+        "max_valid_batches": null,
+        "resume_from_remote_sg_logger": false,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "max_epochs": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "lr_decay_factor": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "lr_warmup_epochs": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "initial_lr": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 10
+                }
+            },
+            "if": {
+                "properties": {
+                    "lr_mode": {
+                        "const": "step"
+                    }
+                }
+            },
+            "then": {
+                "required": [
+                    "lr_updates",
+                    "lr_decay_factor"
+                ]
+            },
+            "required": [
+                "max_epochs",
+                "lr_mode",
+                "initial_lr",
+                "loss"
+            ]
+        },
+        "loss": {
+            "ppyoloe_loss": {
+                "use_static_assigner": false,
+                "num_classes": 13,
+                "reg_max": 16
+            }
+        },
+        "max_epochs": 150,
+        "initial_lr": 0.001
+    },
+    "dataset_params": {
+        "train_dataset_params": null,
+        "train_dataloader_params": null,
+        "valid_dataset_params": null,
+        "valid_dataloader_params": null,
+        "schema": null
+    },
+    "additional_log_items": {
+        "initial_LR": 0.001,
+        "num_devices": 1,
+        "multi_gpu": "None",
+        "device_type": "NVIDIA A100-PCIE-40GB",
+        "installed_packages": [
+            "Babel 2.12.1",
+            "Deprecated 1.2.14",
+            "Pillow 9.5.0",
+            "PyYAML 6.0",
+            "Pygments 2.15.1",
+            "Sphinx 4.0.3",
+            "addict 2.4.0",
+            "aiohttp 3.8.4",
+            "aiosignal 1.3.1",
+            "alabaster 0.7.13",
+            "albumentations 1.3.0",
+            "antlr4-python3-runtime 4.9.3",
+            "async-timeout 4.0.2",
+            "black 23.3.0",
+            "boto3 1.26.158",
+            "botocore 1.29.158",
+            "build 0.10.0",
+            "charset-normalizer 3.1.0",
+            "click 8.1.3",
+            "cloudpickle 2.2.1",
+            "coloredlogs 15.0.1",
+            "coverage 5.3.1",
+            "detecto 1.2.2",
+            "docutils 0.17.1",
+            "einops 0.3.2",
+            "filelock 3.12.2",
+            "frozenlist 1.3.3",
+            "fsspec 2023.6.0",
+            "fvcore 0.1.5.post20221221",
+            "google-auth-oauthlib 0.4.6",
+            "humanfriendly 10.0",
+            "hydra-core 1.3.2",
+            "imagesize 1.4.1",
+            "iopath 0.1.9",
+            "ipywidgets 8.0.6",
+            "jax 0.4.13",
+            "jmespath 1.0.1",
+            "joblib 1.2.0",
+            "json-tricks 3.16.1",
+            "jupyterlab-widgets 3.0.7",
+            "keras 2.7.0",
+            "libclang 16.0.0",
+            "lightning-utilities 0.8.0",
+            "loguru 0.7.0",
+            "markdown-it-py 3.0.0",
+            "mdurl 0.1.2",
+            "ml-dtypes 0.2.0",
+            "mmcv 2.0.0",
+            "mmengine 0.7.4",
+            "model-index 0.1.11",
+            "mpmath 1.3.0",
+            "msgpack 1.0.5",
+            "multidict 6.0.4",
+            "mypy-extensions 1.0.0",
+            "numpy 1.23.0",
+            "omegaconf 2.3.0",
+            "onnx 1.13.0",
+            "onnx-simplifier 0.4.31",
+            "onnxruntime 1.13.1",
+            "opencv-python 4.7.0.72",
+            "opencv-python-headless 4.7.0.72",
+            "openmim 0.3.7",
+            "ordered-set 4.1.0",
+            "pathspec 0.11.1",
+            "pip 23.1.2",
+            "pip-tools 6.13.0",
+            "platformdirs 3.5.3",
+            "portalocker 2.7.0",
+            "prettytable 3.8.0",
+            "protobuf 3.20.3",
+            "psutil 5.9.5",
+            "pyDeprecate 0.3.2",
+            "pyarrow 12.0.1",
+            "pycocotools 2.0.6",
+            "pyparsing 2.4.5",
+            "pyproject-hooks 1.0.0",
+            "pytorch-lightning 2.0.3",
+            "pytorch-quantization 2.1.2",
+            "qudida 0.0.4",
+            "rapidfuzz 3.1.1",
+            "ray 2.5.0",
+            "requests 2.31.0",
+            "rich 13.4.2",
+            "s3transfer 0.6.1",
+            "scikit-learn 1.2.2",
+            "seaborn 0.12.2",
+            "shapely 2.0.1",
+            "snowballstemmer 2.2.0",
+            "sphinx-glpi-theme 0.3",
+            "sphinx-rtd-theme 1.2.2",
+            "sphinxcontrib-applehelp 1.0.4",
+            "sphinxcontrib-devhelp 1.0.2",
+            "sphinxcontrib-htmlhelp 2.0.1",
+            "sphinxcontrib-jquery 4.1",
+            "sphinxcontrib-jsmath 1.0.1",
+            "sphinxcontrib-qthelp 1.0.3",
+            "sphinxcontrib-serializinghtml 1.1.5",
+            "stringcase 1.2.0",
+            "super-gradients 3.1.2",
+            "sympy 1.12",
+            "tabulate 0.9.0",
+            "tensorboard 2.11.2",
+            "tensorboardX 2.6",
+            "tensorboard-data-server 0.6.1",
+            "tensorflow 2.7.0",
+            "tensorflow-estimator 2.7.0",
+            "terminaltables 3.1.10",
+            "threadpoolctl 3.1.0",
+            "tomli 2.0.1",
+            "torch 1.13.1+cu116",
+            "torch-tb-profiler 0.4.1",
+            "torchaudio 0.13.1+cu116",
+            "torchmetrics 0.8.0",
+            "torchvision 0.14.1+cu116",
+            "tqdm 4.64.0",
+            "treelib 1.6.1",
+            "ultralytics 8.0.112",
+            "wheel 0.40.0",
+            "widgetsnbextension 4.0.7",
+            "yacs 0.1.8",
+            "yapf 0.33.0",
+            "yarl 1.9.2",
+            "mmdet 3.0.0",
+            "Keras-Preprocessing 1.1.2",
+            "Markdown 3.3.6",
+            "PIMS 0.5",
+            "PyWavelets 1.2.0",
+            "Werkzeug 2.0.2",
+            "absl-py 1.0.0",
+            "astunparse 1.6.3",
+            "cachetools 4.2.4",
+            "cub 0.28.0",
+            "cycler 0.11.0",
+            "dill 0.3.4",
+            "flatbuffers 2.0",
+            "fonttools 4.28.4",
+            "force 0.1.4",
+            "gast 0.4.0",
+            "google-auth 2.3.3",
+            "google-pasta 0.2.0",
+            "googleapis-common-protos 1.54.0",
+            "grpcio 1.43.0",
+            "h5py 3.6.0",
+            "imageio 2.13.3",
+            "importlib-metadata 4.10.0",
+            "importlib-resources 5.4.0",
+            "kiwisolver 1.3.2",
+            "matplotlib 3.5.1",
+            "networkx 2.6.3",
+            "opencv-contrib-python 4.5.4.60",
+            "opt-einsum 3.3.0",
+            "packaging 21.3",
+            "pandas 1.3.5",
+            "promise 2.3",
+            "requests-oauthlib 1.3.0",
+            "rsa 4.8",
+            "scikit-image 0.19.1",
+            "scipy 1.7.3",
+            "slicerator 1.0.0",
+            "tensorboard-plugin-wit 1.8.0",
+            "tensorflow-datasets 4.4.0",
+            "tensorflow-gpu 2.7.0",
+            "tensorflow-io-gcs-filesystem 0.23.1",
+            "tensorflow-metadata 1.5.0",
+            "termcolor 1.1.0",
+            "tifffile 2021.11.2",
+            "trackpy 0.5.0",
+            "typing-extensions 4.0.1",
+            "wrapt 1.13.3",
+            "zipp 3.6.0",
+            "Automat 0.8.0",
+            "Brlapi 0.7.0",
+            "Jinja2 2.10.1",
+            "Mako 1.1.0",
+            "MarkupSafe 1.1.0",
+            "PyGObject 3.36.0",
+            "PyHamcrest 1.9.0",
+            "PyJWT 1.7.1",
+            "PyNaCl 1.3.0",
+            "SecretStorage 2.3.1",
+            "Send2Trash 1.5.0",
+            "Twisted 18.9.0",
+            "apturl 0.5.2",
+            "attrs 19.3.0",
+            "backcall 0.1.0",
+            "bcrypt 3.1.7",
+            "bleach 3.1.1",
+            "blinker 1.4",
+            "certifi 2019.11.28",
+            "chardet 3.0.4",
+            "cloud-init 22.2",
+            "colorama 0.4.3",
+            "command-not-found 0.3",
+            "configobj 5.0.6",
+            "constantly 15.1.0",
+            "cryptography 2.8",
+            "cupshelpers 1.0",
+            "dbus-python 1.2.16",
+            "decorator 4.4.2",
+            "defer 1.0.6",
+            "defusedxml 0.6.0",
+            "distro 1.4.0",
+            "distro-info 0.23ubuntu1",
+            "dnspython 1.16.0",
+            "duplicity 0.8.12.0",
+            "entrypoints 0.3",
+            "fasteners 0.14.1",
+            "future 0.18.2",
+            "html5lib 1.0.1",
+            "httplib2 0.14.0",
+            "hyperlink 19.0.0",
+            "idna 2.8",
+            "incremental 16.10.1",
+            "ipykernel 5.2.0",
+            "ipython 7.13.0",
+            "ipython-genutils 0.2.0",
+            "jedi 0.15.2",
+            "jsonpatch 1.22",
+            "jsonpointer 2.0",
+            "jsonschema 3.2.0",
+            "jupyter-client 6.1.2",
+            "jupyter-core 4.6.3",
+            "keyring 18.0.1",
+            "language-selector 0.1",
+            "launchpadlib 1.10.13",
+            "lazr.restfulclient 0.14.2",
+            "lazr.uri 1.0.3",
+            "lockfile 0.12.2",
+            "louis 3.12.0",
+            "macaroonbakery 1.3.1",
+            "mistune 0.8.4",
+            "monotonic 1.5",
+            "more-itertools 4.2.0",
+            "nbconvert 5.6.1",
+            "nbformat 5.0.4",
+            "netifaces 0.10.4",
+            "notebook 6.0.3",
+            "oauthlib 3.1.0",
+            "olefile 0.46",
+            "pandocfilters 1.4.2",
+            "paramiko 2.6.0",
+            "parso 0.5.2",
+            "pexpect 4.6.0",
+            "pickleshare 0.7.5",
+            "prometheus-client 0.7.1",
+            "prompt-toolkit 2.0.10",
+            "pyOpenSSL 19.0.0",
+            "pyRFC3339 1.1",
+            "pyasn1 0.4.2",
+            "pyasn1-modules 0.2.1",
+            "pycairo 1.16.2",
+            "pycrypto 2.6.1",
+            "pycups 1.9.73",
+            "pymacaroons 0.13.0",
+            "pyrsistent 0.15.5",
+            "pyserial 3.4",
+            "python-apt 2.0.0+ubuntu0.20.4.6",
+            "python-dateutil 2.7.3",
+            "python-debian 0.1.36ubuntu1",
+            "pytz 2019.3",
+            "pyxdg 0.26",
+            "pyzmq 18.1.1",
+            "reportlab 3.5.34",
+            "requests-unixsocket 0.2.0",
+            "screen-resolution-extra 0.0.0",
+            "service-identity 18.1.0",
+            "setuptools 45.2.0",
+            "simplejson 3.16.0",
+            "six 1.14.0",
+            "sos 4.3",
+            "ssh-import-id 5.10",
+            "systemd-python 234",
+            "terminado 0.8.2",
+            "testpath 0.4.4",
+            "tornado 5.1.1",
+            "traitlets 4.3.3",
+            "ubuntu-advantage-tools 27.4",
+            "ubuntu-drivers-common 0.0.0",
+            "ufw 0.36",
+            "unattended-upgrades 0.1",
+            "urllib3 1.25.8",
+            "usb-creator 0.3.7",
+            "wadllib 1.3.3",
+            "wcwidth 0.1.8",
+            "webencodings 0.5.1",
+            "xkit 0.0.0",
+            "zope.interface 4.7.1"
+        ]
+    }
+}
+------- config parameters end --------
+
+Epoch 0 (1/150)  - Train_PPYoloELoss/loss_cls: 1.1746633052825928	Train_PPYoloELoss/loss_iou: 0.15130776166915894	Train_PPYoloELoss/loss_dfl: 0.9226477146148682	Train_PPYoloELoss/loss: 2.014256715774536	Valid_PPYoloELoss/loss_cls: 0.9076894521713257	Valid_PPYoloELoss/loss_iou: 0.13505174219608307	Valid_PPYoloELoss/loss_dfl: 0.9200434684753418	Valid_PPYoloELoss/loss: 1.7053407430648804	Valid_Precision@0.50:0.95: 0.06918971985578537	Valid_Recall@0.50:0.95: 0.5900664329528809	Valid_mAP@0.50:0.95: 0.3789622485637665	Valid_F1@0.50:0.95: 0.11660555750131607	Valid_Precision@0.50: 0.08740593492984772	Valid_Recall@0.50: 0.8023329377174377	Valid_mAP@0.50: 0.5220344662666321	Valid_F1@0.50: 0.1487666666507721	Inference_Time: 7048.03662109375	
+
+Epoch 0 (1/150)  - LR/Param_group_0: 1e-06	LR/Param_group_1: 1e-06	
+
+Epoch 1 (2/150)  - Train_PPYoloELoss/loss_cls: 0.9550140500068665	Train_PPYoloELoss/loss_iou: 0.13579048216342926	Train_PPYoloELoss/loss_dfl: 0.8515294194221497	Train_PPYoloELoss/loss: 1.7202544212341309	Valid_PPYoloELoss/loss_cls: 0.8162954449653625	Valid_PPYoloELoss/loss_iou: 0.1256997138261795	Valid_PPYoloELoss/loss_dfl: 0.8666881322860718	Valid_PPYoloELoss/loss: 1.5638887882232666	Valid_Precision@0.50:0.95: 0.08069759607315063	Valid_Recall@0.50:0.95: 0.6615465879440308	Valid_mAP@0.50:0.95: 0.46094805002212524	Valid_F1@0.50:0.95: 0.13340899348258972	Valid_Precision@0.50: 0.09971383213996887	Valid_Recall@0.50: 0.8890810012817383	Valid_mAP@0.50: 0.6241594552993774	Valid_F1@0.50: 0.16648653149604797	Inference_Time: 7004.029296875	
+
+Epoch 1 (2/150)  - LR/Param_group_0: 0.0009999054723547585	LR/Param_group_1: 0.0009999054723547585	
+
+Epoch 2 (3/150)  - Train_PPYoloELoss/loss_cls: 0.9196111559867859	Train_PPYoloELoss/loss_iou: 0.13283611834049225	Train_PPYoloELoss/loss_dfl: 0.844327986240387	Train_PPYoloELoss/loss: 1.6738643646240234	Valid_PPYoloELoss/loss_cls: 0.7918819189071655	Valid_PPYoloELoss/loss_iou: 0.12295098602771759	Valid_PPYoloELoss/loss_dfl: 0.853900134563446	Valid_PPYoloELoss/loss: 1.5262092351913452	Valid_Precision@0.50:0.95: 0.09388110041618347	Valid_Recall@0.50:0.95: 0.681252121925354	Valid_mAP@0.50:0.95: 0.4971254765987396	Valid_F1@0.50:0.95: 0.15330062806606293	Valid_Precision@0.50: 0.11678643524646759	Valid_Recall@0.50: 0.919890284538269	Valid_mAP@0.50: 0.6747910976409912	Valid_F1@0.50: 0.19256922602653503	Inference_Time: 7047.904296875	
+
+Epoch 2 (3/150)  - LR/Param_group_0: 0.0009996136005203562	LR/Param_group_1: 0.0009996136005203562	
+
+Epoch 3 (4/150)  - Train_PPYoloELoss/loss_cls: 0.8728874325752258	Train_PPYoloELoss/loss_iou: 0.12913766503334045	Train_PPYoloELoss/loss_dfl: 0.8287988901138306	Train_PPYoloELoss/loss: 1.610131025314331	Valid_PPYoloELoss/loss_cls: 0.7437670826911926	Valid_PPYoloELoss/loss_iou: 0.11970195174217224	Valid_PPYoloELoss/loss_dfl: 0.8394819498062134	Valid_PPYoloELoss/loss: 1.4627630710601807	Valid_Precision@0.50:0.95: 0.10289453715085983	Valid_Recall@0.50:0.95: 0.7027506232261658	Valid_mAP@0.50:0.95: 0.5326272249221802	Valid_F1@0.50:0.95: 0.1661931276321411	Valid_Precision@0.50: 0.12616783380508423	Valid_Recall@0.50: 0.9265060424804688	Valid_mAP@0.50: 0.7097025513648987	Valid_F1@0.50: 0.20558390021324158	Inference_Time: 7015.6533203125	
+
+Epoch 3 (4/150)  - LR/Param_group_0: 0.000999124467162236	LR/Param_group_1: 0.000999124467162236	
+
+Epoch 4 (5/150)  - Train_PPYoloELoss/loss_cls: 0.8406764268875122	Train_PPYoloELoss/loss_iou: 0.12746162712574005	Train_PPYoloELoss/loss_dfl: 0.8216941952705383	Train_PPYoloELoss/loss: 1.5701781511306763	Valid_PPYoloELoss/loss_cls: 0.7195929884910583	Valid_PPYoloELoss/loss_iou: 0.1184898242354393	Valid_PPYoloELoss/loss_dfl: 0.8301736116409302	Valid_PPYoloELoss/loss: 1.4309042692184448	Valid_Precision@0.50:0.95: 0.11057589203119278	Valid_Recall@0.50:0.95: 0.7181529998779297	Valid_mAP@0.50:0.95: 0.551449179649353	Valid_F1@0.50:0.95: 0.17803417146205902	Valid_Precision@0.50: 0.13485731184482574	Valid_Recall@0.50: 0.9377637505531311	Valid_mAP@0.50: 0.7333357334136963	Valid_F1@0.50: 0.21872839331626892	Inference_Time: 7010.5673828125	
+
+Epoch 4 (5/150)  - LR/Param_group_0: 0.000998438286880649	LR/Param_group_1: 0.000998438286880649	
+
+Epoch 5 (6/150)  - Train_PPYoloELoss/loss_cls: 0.8165634274482727	Train_PPYoloELoss/loss_iou: 0.12449681013822556	Train_PPYoloELoss/loss_dfl: 0.8100094199180603	Train_PPYoloELoss/loss: 1.5328090190887451	Valid_PPYoloELoss/loss_cls: 0.7020774483680725	Valid_PPYoloELoss/loss_iou: 0.11808512359857559	Valid_PPYoloELoss/loss_dfl: 0.8269184827804565	Valid_PPYoloELoss/loss: 1.4107497930526733	Valid_Precision@0.50:0.95: 0.11356326192617416	Valid_Recall@0.50:0.95: 0.7173176407814026	Valid_mAP@0.50:0.95: 0.5672110319137573	Valid_F1@0.50:0.95: 0.18258635699748993	Valid_Precision@0.50: 0.13887785375118256	Valid_Recall@0.50: 0.9417756795883179	Valid_mAP@0.50: 0.7636853456497192	Valid_F1@0.50: 0.22506769001483917	Inference_Time: 6985.97705078125	
+
+Epoch 5 (6/150)  - LR/Param_group_0: 0.000997555360727359	LR/Param_group_1: 0.000997555360727359	
+
+Epoch 6 (7/150)  - Train_PPYoloELoss/loss_cls: 0.8019180297851562	Train_PPYoloELoss/loss_iou: 0.12386210262775421	Train_PPYoloELoss/loss_dfl: 0.8080742359161377	Train_PPYoloELoss/loss: 1.5156103372573853	Valid_PPYoloELoss/loss_cls: 0.6913333535194397	Valid_PPYoloELoss/loss_iou: 0.11824986338615417	Valid_PPYoloELoss/loss_dfl: 0.8245728611946106	Valid_PPYoloELoss/loss: 1.399244785308838	Valid_Precision@0.50:0.95: 0.12184194475412369	Valid_Recall@0.50:0.95: 0.7274920344352722	Valid_mAP@0.50:0.95: 0.5834354162216187	Valid_F1@0.50:0.95: 0.19458965957164764	Valid_Precision@0.50: 0.14795944094657898	Valid_Recall@0.50: 0.9548944234848022	Valid_mAP@0.50: 0.7764956951141357	Valid_F1@0.50: 0.23837712407112122	Inference_Time: 7000.29443359375	
+
+Epoch 6 (7/150)  - LR/Param_group_0: 0.0009964760760735633	LR/Param_group_1: 0.0009964760760735633	
+
+Epoch 7 (8/150)  - Train_PPYoloELoss/loss_cls: 0.7887823581695557	Train_PPYoloELoss/loss_iou: 0.1225169450044632	Train_PPYoloELoss/loss_dfl: 0.8056261539459229	Train_PPYoloELoss/loss: 1.4978870153427124	Valid_PPYoloELoss/loss_cls: 0.675967812538147	Valid_PPYoloELoss/loss_iou: 0.11739964038133621	Valid_PPYoloELoss/loss_dfl: 0.8193694949150085	Valid_PPYoloELoss/loss: 1.379151463508606	Valid_Precision@0.50:0.95: 0.1344374418258667	Valid_Recall@0.50:0.95: 0.7304971218109131	Valid_mAP@0.50:0.95: 0.5936709046363831	Valid_F1@0.50:0.95: 0.211893692612648	Valid_Precision@0.50: 0.16409532725811005	Valid_Recall@0.50: 0.9513610005378723	Valid_mAP@0.50: 0.7908127307891846	Valid_F1@0.50: 0.26027199625968933	Inference_Time: 7007.798828125	
+
+Epoch 7 (8/150)  - LR/Param_group_0: 0.000995200906439936	LR/Param_group_1: 0.000995200906439936	
+
+Epoch 8 (9/150)  - Train_PPYoloELoss/loss_cls: 0.7571074962615967	Train_PPYoloELoss/loss_iou: 0.12024784833192825	Train_PPYoloELoss/loss_dfl: 0.798009991645813	Train_PPYoloELoss/loss: 1.4567326307296753	Valid_PPYoloELoss/loss_cls: 0.6596023440361023	Valid_PPYoloELoss/loss_iou: 0.11649210005998611	Valid_PPYoloELoss/loss_dfl: 0.8123133778572083	Valid_PPYoloELoss/loss: 1.3569892644882202	Valid_Precision@0.50:0.95: 0.14008699357509613	Valid_Recall@0.50:0.95: 0.7332916855812073	Valid_mAP@0.50:0.95: 0.6047995686531067	Valid_F1@0.50:0.95: 0.22003938257694244	Valid_Precision@0.50: 0.17118333280086517	Valid_Recall@0.50: 0.960051953792572	Valid_mAP@0.50: 0.8041352033615112	Valid_F1@0.50: 0.2707453966140747	Inference_Time: 7035.4580078125	
+
+Epoch 8 (9/150)  - LR/Param_group_0: 0.0009937304112888792	LR/Param_group_1: 0.0009937304112888792	
+
+Epoch 9 (10/150)  - Train_PPYoloELoss/loss_cls: 0.7611861824989319	Train_PPYoloELoss/loss_iou: 0.12001097202301025	Train_PPYoloELoss/loss_dfl: 0.7957265973091125	Train_PPYoloELoss/loss: 1.4590765237808228	Valid_PPYoloELoss/loss_cls: 0.6501778960227966	Valid_PPYoloELoss/loss_iou: 0.1154746413230896	Valid_PPYoloELoss/loss_dfl: 0.8094174861907959	Valid_PPYoloELoss/loss: 1.3435732126235962	Valid_Precision@0.50:0.95: 0.15091867744922638	Valid_Recall@0.50:0.95: 0.7370368838310242	Valid_mAP@0.50:0.95: 0.6124251484870911	Valid_F1@0.50:0.95: 0.23356615006923676	Valid_Precision@0.50: 0.18357950448989868	Valid_Recall@0.50: 0.9605854749679565	Valid_mAP@0.50: 0.8161656260490417	Valid_F1@0.50: 0.2861657738685608	Inference_Time: 7003.88427734375	
+
+Epoch 9 (10/150)  - LR/Param_group_0: 0.0009920652357790663	LR/Param_group_1: 0.0009920652357790663	
+
+Epoch 10 (11/150)  - Train_PPYoloELoss/loss_cls: 0.7483558058738708	Train_PPYoloELoss/loss_iou: 0.11909003555774689	Train_PPYoloELoss/loss_dfl: 0.791151762008667	Train_PPYoloELoss/loss: 1.4416570663452148	Valid_PPYoloELoss/loss_cls: 0.6385537385940552	Valid_PPYoloELoss/loss_iou: 0.11592715233564377	Valid_PPYoloELoss/loss_dfl: 0.8075937032699585	Valid_PPYoloELoss/loss: 1.332168459892273	Valid_Precision@0.50:0.95: 0.1542523354291916	Valid_Recall@0.50:0.95: 0.7391053438186646	Valid_mAP@0.50:0.95: 0.6144089698791504	Valid_F1@0.50:0.95: 0.23816342651844025	Valid_Precision@0.50: 0.18902359902858734	Valid_Recall@0.50: 0.9680413007736206	Valid_mAP@0.50: 0.8215600252151489	Valid_F1@0.50: 0.2938934564590454	Inference_Time: 6993.13623046875	
+
+Epoch 10 (11/150)  - LR/Param_group_0: 0.0009902061104823884	LR/Param_group_1: 0.0009902061104823884	
+
+Epoch 11 (12/150)  - Train_PPYoloELoss/loss_cls: 0.7362135648727417	Train_PPYoloELoss/loss_iou: 0.11793612688779831	Train_PPYoloELoss/loss_dfl: 0.7874706983566284	Train_PPYoloELoss/loss: 1.4247897863388062	Valid_PPYoloELoss/loss_cls: 0.6293542981147766	Valid_PPYoloELoss/loss_iou: 0.11353269219398499	Valid_PPYoloELoss/loss_dfl: 0.8006381988525391	Valid_PPYoloELoss/loss: 1.3135050535202026	Valid_Precision@0.50:0.95: 0.16109387576580048	Valid_Recall@0.50:0.95: 0.7408401966094971	Valid_mAP@0.50:0.95: 0.6206454634666443	Valid_F1@0.50:0.95: 0.24657751619815826	Valid_Precision@0.50: 0.1966918557882309	Valid_Recall@0.50: 0.9636021852493286	Valid_mAP@0.50: 0.8227717876434326	Valid_F1@0.50: 0.3032647669315338	Inference_Time: 6992.8779296875	
+
+Epoch 11 (12/150)  - LR/Param_group_0: 0.0009881538510634255	LR/Param_group_1: 0.0009881538510634255	
+
+Epoch 12 (13/150)  - Train_PPYoloELoss/loss_cls: 0.7345408797264099	Train_PPYoloELoss/loss_iou: 0.11781703680753708	Train_PPYoloELoss/loss_dfl: 0.7905125021934509	Train_PPYoloELoss/loss: 1.424340844154358	Valid_PPYoloELoss/loss_cls: 0.6319969296455383	Valid_PPYoloELoss/loss_iou: 0.11398147791624069	Valid_PPYoloELoss/loss_dfl: 0.8025428056716919	Valid_PPYoloELoss/loss: 1.3182226419448853	Valid_Precision@0.50:0.95: 0.1589066982269287	Valid_Recall@0.50:0.95: 0.7422292232513428	Valid_mAP@0.50:0.95: 0.6235530972480774	Valid_F1@0.50:0.95: 0.2442874312400818	Valid_Precision@0.50: 0.19333507120609283	Valid_Recall@0.50: 0.9669313430786133	Valid_mAP@0.50: 0.8235582709312439	Valid_F1@0.50: 0.29981163144111633	Inference_Time: 6920.21337890625	
+
+Epoch 12 (13/150)  - LR/Param_group_0: 0.0009859093579215868	LR/Param_group_1: 0.0009859093579215868	
+
+Epoch 13 (14/150)  - Train_PPYoloELoss/loss_cls: 0.74534672498703	Train_PPYoloELoss/loss_iou: 0.11803416162729263	Train_PPYoloELoss/loss_dfl: 0.7923784852027893	Train_PPYoloELoss/loss: 1.4366211891174316	Valid_PPYoloELoss/loss_cls: 0.6302642822265625	Valid_PPYoloELoss/loss_iou: 0.1140347272157669	Valid_PPYoloELoss/loss_dfl: 0.8013001084327698	Valid_PPYoloELoss/loss: 1.316001057624817	Valid_Precision@0.50:0.95: 0.15584515035152435	Valid_Recall@0.50:0.95: 0.7433597445487976	Valid_mAP@0.50:0.95: 0.6265880465507507	Valid_F1@0.50:0.95: 0.24036315083503723	Valid_Precision@0.50: 0.18834401667118073	Valid_Recall@0.50: 0.9696886539459229	Valid_mAP@0.50: 0.8260897397994995	Valid_F1@0.50: 0.29331061244010925	Inference_Time: 6965.40283203125	
+
+Epoch 13 (14/150)  - LR/Param_group_0: 0.0009834736157960714	LR/Param_group_1: 0.0009834736157960714	
+
+Epoch 14 (15/150)  - Train_PPYoloELoss/loss_cls: 0.7233766317367554	Train_PPYoloELoss/loss_iou: 0.11617077887058258	Train_PPYoloELoss/loss_dfl: 0.7863270044326782	Train_PPYoloELoss/loss: 1.4069675207138062	Valid_PPYoloELoss/loss_cls: 0.627782940864563	Valid_PPYoloELoss/loss_iou: 0.1131725087761879	Valid_PPYoloELoss/loss_dfl: 0.7955752611160278	Valid_PPYoloELoss/loss: 1.3085018396377563	Valid_Precision@0.50:0.95: 0.16105416417121887	Valid_Recall@0.50:0.95: 0.7505418062210083	Valid_mAP@0.50:0.95: 0.6298875212669373	Valid_F1@0.50:0.95: 0.24754826724529266	Valid_Precision@0.50: 0.1946486532688141	Valid_Recall@0.50: 0.9724997282028198	Valid_mAP@0.50: 0.8300552368164062	Valid_F1@0.50: 0.3017134964466095	Inference_Time: 6999.8017578125	
+
+Epoch 14 (15/150)  - LR/Param_group_0: 0.0009808476933338304	LR/Param_group_1: 0.0009808476933338304	
+
+Epoch 15 (16/150)  - Train_PPYoloELoss/loss_cls: 0.7182047963142395	Train_PPYoloELoss/loss_iou: 0.11511719226837158	Train_PPYoloELoss/loss_dfl: 0.7809626460075378	Train_PPYoloELoss/loss: 1.3964778184890747	Valid_PPYoloELoss/loss_cls: 0.6246132254600525	Valid_PPYoloELoss/loss_iou: 0.11324261128902435	Valid_PPYoloELoss/loss_dfl: 0.7947865724563599	Valid_PPYoloELoss/loss: 1.3051130771636963	Valid_Precision@0.50:0.95: 0.16748642921447754	Valid_Recall@0.50:0.95: 0.7515720129013062	Valid_mAP@0.50:0.95: 0.6349648237228394	Valid_F1@0.50:0.95: 0.25534313917160034	Valid_Precision@0.50: 0.202139750123024	Valid_Recall@0.50: 0.9750675559043884	Valid_mAP@0.50: 0.8305429816246033	Valid_F1@0.50: 0.31077703833580017	Inference_Time: 6962.43701171875	
+
+Epoch 15 (16/150)  - LR/Param_group_0: 0.000978032742620711	LR/Param_group_1: 0.000978032742620711	
+
+Epoch 16 (17/150)  - Train_PPYoloELoss/loss_cls: 0.7085022926330566	Train_PPYoloELoss/loss_iou: 0.11502913385629654	Train_PPYoloELoss/loss_dfl: 0.7815194725990295	Train_PPYoloELoss/loss: 1.3868342638015747	Valid_PPYoloELoss/loss_cls: 0.6241574883460999	Valid_PPYoloELoss/loss_iou: 0.11298828572034836	Valid_PPYoloELoss/loss_dfl: 0.7945322394371033	Valid_PPYoloELoss/loss: 1.3038941621780396	Valid_Precision@0.50:0.95: 0.172481507062912	Valid_Recall@0.50:0.95: 0.7536290287971497	Valid_mAP@0.50:0.95: 0.6358098983764648	Valid_F1@0.50:0.95: 0.2615620791912079	Valid_Precision@0.50: 0.20748908817768097	Valid_Recall@0.50: 0.9752022624015808	Valid_mAP@0.50: 0.8363756537437439	Valid_F1@0.50: 0.3174178898334503	Inference_Time: 6993.7333984375	
+
+Epoch 16 (17/150)  - LR/Param_group_0: 0.0009750299986759968	LR/Param_group_1: 0.0009750299986759968	
+
+Epoch 17 (18/150)  - Train_PPYoloELoss/loss_cls: 0.7123985886573792	Train_PPYoloELoss/loss_iou: 0.11446565389633179	Train_PPYoloELoss/loss_dfl: 0.7800584435462952	Train_PPYoloELoss/loss: 1.3885918855667114	Valid_PPYoloELoss/loss_cls: 0.6198443174362183	Valid_PPYoloELoss/loss_iou: 0.1128033772110939	Valid_PPYoloELoss/loss_dfl: 0.796100914478302	Valid_PPYoloELoss/loss: 1.299903392791748	Valid_Precision@0.50:0.95: 0.16718478500843048	Valid_Recall@0.50:0.95: 0.7540965676307678	Valid_mAP@0.50:0.95: 0.6418808698654175	Valid_F1@0.50:0.95: 0.25587403774261475	Valid_Precision@0.50: 0.20269958674907684	Valid_Recall@0.50: 0.9734376072883606	Valid_mAP@0.50: 0.8466714024543762	Valid_F1@0.50: 0.3126772344112396	Inference_Time: 6953.2451171875	
+
+Epoch 17 (18/150)  - LR/Param_group_0: 0.0009718407789105611	LR/Param_group_1: 0.0009718407789105611	
+
+Epoch 18 (19/150)  - Train_PPYoloELoss/loss_cls: 0.698863685131073	Train_PPYoloELoss/loss_iou: 0.11427959054708481	Train_PPYoloELoss/loss_dfl: 0.7787663340568542	Train_PPYoloELoss/loss: 1.3739458322525024	Valid_PPYoloELoss/loss_cls: 0.6164708733558655	Valid_PPYoloELoss/loss_iou: 0.1123822033405304	Valid_PPYoloELoss/loss_dfl: 0.7938951253890991	Valid_PPYoloELoss/loss: 1.294373869895935	Valid_Precision@0.50:0.95: 0.17280632257461548	Valid_Recall@0.50:0.95: 0.7541586756706238	Valid_mAP@0.50:0.95: 0.6430015563964844	Valid_F1@0.50:0.95: 0.2632349133491516	Valid_Precision@0.50: 0.20969751477241516	Valid_Recall@0.50: 0.9738231301307678	Valid_mAP@0.50: 0.8474021553993225	Valid_F1@0.50: 0.3218720853328705	Inference_Time: 6906.96240234375	
+
+Epoch 18 (19/150)  - LR/Param_group_0: 0.0009684664825488701	LR/Param_group_1: 0.0009684664825488701	
+
+Epoch 19 (20/150)  - Train_PPYoloELoss/loss_cls: 0.6934444904327393	Train_PPYoloELoss/loss_iou: 0.11362417787313461	Train_PPYoloELoss/loss_dfl: 0.7730516791343689	Train_PPYoloELoss/loss: 1.3640309572219849	Valid_PPYoloELoss/loss_cls: 0.6181900501251221	Valid_PPYoloELoss/loss_iou: 0.11239305883646011	Valid_PPYoloELoss/loss_dfl: 0.7913647890090942	Valid_PPYoloELoss/loss: 1.2948551177978516	Valid_Precision@0.50:0.95: 0.17756611108779907	Valid_Recall@0.50:0.95: 0.752488374710083	Valid_mAP@0.50:0.95: 0.642952024936676	Valid_F1@0.50:0.95: 0.2686147391796112	Valid_Precision@0.50: 0.21550177037715912	Valid_Recall@0.50: 0.9723039269447327	Valid_mAP@0.50: 0.8466253876686096	Valid_F1@0.50: 0.3285025358200073	Inference_Time: 6998.37158203125	
+
+Epoch 19 (20/150)  - LR/Param_group_0: 0.0009649085900150948	LR/Param_group_1: 0.0009649085900150948	
+
+Epoch 20 (21/150)  - Train_PPYoloELoss/loss_cls: 0.6871637105941772	Train_PPYoloELoss/loss_iou: 0.11206433922052383	Train_PPYoloELoss/loss_dfl: 0.7663670182228088	Train_PPYoloELoss/loss: 1.350508689880371	Valid_PPYoloELoss/loss_cls: 0.6205605864524841	Valid_PPYoloELoss/loss_iou: 0.11187942326068878	Valid_PPYoloELoss/loss_dfl: 0.7877795100212097	Valid_PPYoloELoss/loss: 1.2941489219665527	Valid_Precision@0.50:0.95: 0.18042072653770447	Valid_Recall@0.50:0.95: 0.751593291759491	Valid_mAP@0.50:0.95: 0.6470741629600525	Valid_F1@0.50:0.95: 0.272341251373291	Valid_Precision@0.50: 0.21790263056755066	Valid_Recall@0.50: 0.9652000665664673	Valid_mAP@0.50: 0.8474000096321106	Valid_F1@0.50: 0.3312954604625702	Inference_Time: 6934.99951171875	
+
+Epoch 20 (21/150)  - LR/Param_group_0: 0.0009611686622835957	LR/Param_group_1: 0.0009611686622835957	
+
+Epoch 21 (22/150)  - Train_PPYoloELoss/loss_cls: 0.6802478432655334	Train_PPYoloELoss/loss_iou: 0.11270814388990402	Train_PPYoloELoss/loss_dfl: 0.7687705159187317	Train_PPYoloELoss/loss: 1.346403956413269	Valid_PPYoloELoss/loss_cls: 0.6168263554573059	Valid_PPYoloELoss/loss_iou: 0.11139219999313354	Valid_PPYoloELoss/loss_dfl: 0.7858722805976868	Valid_PPYoloELoss/loss: 1.2882425785064697	Valid_Precision@0.50:0.95: 0.1808028221130371	Valid_Recall@0.50:0.95: 0.7535574436187744	Valid_mAP@0.50:0.95: 0.6534926295280457	Valid_F1@0.50:0.95: 0.27310338616371155	Valid_Precision@0.50: 0.2170684039592743	Valid_Recall@0.50: 0.9615046381950378	Valid_mAP@0.50: 0.8499006628990173	Valid_F1@0.50: 0.33033084869384766	Inference_Time: 6913.6142578125	
+
+Epoch 21 (22/150)  - LR/Param_group_0: 0.0009572483401940671	LR/Param_group_1: 0.0009572483401940671	
+
+Epoch 22 (23/150)  - Train_PPYoloELoss/loss_cls: 0.6814321279525757	Train_PPYoloELoss/loss_iou: 0.11200613528490067	Train_PPYoloELoss/loss_dfl: 0.7656498551368713	Train_PPYoloELoss/loss: 1.3442727327346802	Valid_PPYoloELoss/loss_cls: 0.6112160682678223	Valid_PPYoloELoss/loss_iou: 0.11153921484947205	Valid_PPYoloELoss/loss_dfl: 0.7847050428390503	Valid_PPYoloELoss/loss: 1.2824167013168335	Valid_Precision@0.50:0.95: 0.1856987327337265	Valid_Recall@0.50:0.95: 0.7512872815132141	Valid_mAP@0.50:0.95: 0.6542487740516663	Valid_F1@0.50:0.95: 0.2792070806026459	Valid_Precision@0.50: 0.22364541888237	Valid_Recall@0.50: 0.9650798439979553	Valid_mAP@0.50: 0.8542317748069763	Valid_F1@0.50: 0.33911460638046265	Inference_Time: 7190.548828125	
+
+Epoch 22 (23/150)  - LR/Param_group_0: 0.0009531493437316427	LR/Param_group_1: 0.0009531493437316427	
+
+Epoch 23 (24/150)  - Train_PPYoloELoss/loss_cls: 0.670966386795044	Train_PPYoloELoss/loss_iou: 0.1103678047657013	Train_PPYoloELoss/loss_dfl: 0.7619735598564148	Train_PPYoloELoss/loss: 1.3278738260269165	Valid_PPYoloELoss/loss_cls: 0.6085838675498962	Valid_PPYoloELoss/loss_iou: 0.11088824272155762	Valid_PPYoloELoss/loss_dfl: 0.7822353839874268	Valid_PPYoloELoss/loss: 1.2769222259521484	Valid_Precision@0.50:0.95: 0.1903638243675232	Valid_Recall@0.50:0.95: 0.753139078617096	Valid_mAP@0.50:0.95: 0.657833993434906	Valid_F1@0.50:0.95: 0.2844545841217041	Valid_Precision@0.50: 0.2287605106830597	Valid_Recall@0.50: 0.9645627737045288	Valid_mAP@0.50: 0.8544345498085022	Valid_F1@0.50: 0.3447788953781128	Inference_Time: 6900.75927734375	
+
+Epoch 23 (24/150)  - LR/Param_group_0: 0.0009488734712722769	LR/Param_group_1: 0.0009488734712722769	
+
+Epoch 24 (25/150)  - Train_PPYoloELoss/loss_cls: 0.6692991256713867	Train_PPYoloELoss/loss_iou: 0.11063805222511292	Train_PPYoloELoss/loss_dfl: 0.760921061038971	Train_PPYoloELoss/loss: 1.3263559341430664	Valid_PPYoloELoss/loss_cls: 0.6099912524223328	Valid_PPYoloELoss/loss_iou: 0.1113818809390068	Valid_PPYoloELoss/loss_dfl: 0.784200131893158	Valid_PPYoloELoss/loss: 1.2805461883544922	Valid_Precision@0.50:0.95: 0.19542324542999268	Valid_Recall@0.50:0.95: 0.7546371221542358	Valid_mAP@0.50:0.95: 0.6599404215812683	Valid_F1@0.50:0.95: 0.29011401534080505	Valid_Precision@0.50: 0.2340032160282135	Valid_Recall@0.50: 0.9648481607437134	Valid_mAP@0.50: 0.8586914539337158	Valid_F1@0.50: 0.35047104954719543	Inference_Time: 6866.484375	
+
+Epoch 24 (25/150)  - LR/Param_group_0: 0.0009444225987937329	LR/Param_group_1: 0.0009444225987937329	
+
+Epoch 25 (26/150)  - Train_PPYoloELoss/loss_cls: 0.6624312996864319	Train_PPYoloELoss/loss_iou: 0.10914390534162521	Train_PPYoloELoss/loss_dfl: 0.7584540843963623	Train_PPYoloELoss/loss: 1.3145183324813843	Valid_PPYoloELoss/loss_cls: 0.6030550599098206	Valid_PPYoloELoss/loss_iou: 0.11095263063907623	Valid_PPYoloELoss/loss_dfl: 0.7812463641166687	Valid_PPYoloELoss/loss: 1.2710597515106201	Valid_Precision@0.50:0.95: 0.2020033448934555	Valid_Recall@0.50:0.95: 0.7565104961395264	Valid_mAP@0.50:0.95: 0.6647796034812927	Valid_F1@0.50:0.95: 0.29803118109703064	Valid_Precision@0.50: 0.24043896794319153	Valid_Recall@0.50: 0.9624200463294983	Valid_mAP@0.50: 0.8584160208702087	Valid_F1@0.50: 0.35808277130126953	Inference_Time: 6967.01220703125	
+
+Epoch 25 (26/150)  - LR/Param_group_0: 0.000939798679052524	LR/Param_group_1: 0.000939798679052524	
+
+Epoch 26 (27/150)  - Train_PPYoloELoss/loss_cls: 0.6703172326087952	Train_PPYoloELoss/loss_iou: 0.11034940183162689	Train_PPYoloELoss/loss_dfl: 0.7623114585876465	Train_PPYoloELoss/loss: 1.327346920967102	Valid_PPYoloELoss/loss_cls: 0.6056893467903137	Valid_PPYoloELoss/loss_iou: 0.11107508093118668	Valid_PPYoloELoss/loss_dfl: 0.781587541103363	Valid_PPYoloELoss/loss: 1.2741705179214478	Valid_Precision@0.50:0.95: 0.20407427847385406	Valid_Recall@0.50:0.95: 0.7562897801399231	Valid_mAP@0.50:0.95: 0.6650025248527527	Valid_F1@0.50:0.95: 0.300601601600647	Valid_Precision@0.50: 0.24315203726291656	Valid_Recall@0.50: 0.9606030583381653	Valid_mAP@0.50: 0.8582079410552979	Valid_F1@0.50: 0.36136534810066223	Inference_Time: 6902.69775390625	
+
+Epoch 26 (27/150)  - LR/Param_group_0: 0.0009350037407271703	LR/Param_group_1: 0.0009350037407271703	
+
+Epoch 27 (28/150)  - Train_PPYoloELoss/loss_cls: 0.6533726453781128	Train_PPYoloELoss/loss_iou: 0.10853283852338791	Train_PPYoloELoss/loss_dfl: 0.7532768249511719	Train_PPYoloELoss/loss: 1.301342487335205	Valid_PPYoloELoss/loss_cls: 0.5994330644607544	Valid_PPYoloELoss/loss_iou: 0.10996460169553757	Valid_PPYoloELoss/loss_dfl: 0.7776510119438171	Valid_PPYoloELoss/loss: 1.2631698846817017	Valid_Precision@0.50:0.95: 0.2036992460489273	Valid_Recall@0.50:0.95: 0.7598605155944824	Valid_mAP@0.50:0.95: 0.6690012216567993	Valid_F1@0.50:0.95: 0.3014209270477295	Valid_Precision@0.50: 0.24213828146457672	Valid_Recall@0.50: 0.9610347151756287	Valid_mAP@0.50: 0.8620467782020569	Valid_F1@0.50: 0.3613327741622925	Inference_Time: 6943.40625	
+
+Epoch 27 (28/150)  - LR/Param_group_0: 0.000930039887528145	LR/Param_group_1: 0.000930039887528145	
+
+Epoch 28 (29/150)  - Train_PPYoloELoss/loss_cls: 0.653765857219696	Train_PPYoloELoss/loss_iou: 0.1086389571428299	Train_PPYoloELoss/loss_dfl: 0.7571913003921509	Train_PPYoloELoss/loss: 1.303959608078003	Valid_PPYoloELoss/loss_cls: 0.5988420248031616	Valid_PPYoloELoss/loss_iou: 0.1097656860947609	Valid_PPYoloELoss/loss_dfl: 0.775182843208313	Valid_PPYoloELoss/loss: 1.2608473300933838	Valid_Precision@0.50:0.95: 0.20751668512821198	Valid_Recall@0.50:0.95: 0.7652690410614014	Valid_mAP@0.50:0.95: 0.6734017133712769	Valid_F1@0.50:0.95: 0.3064761161804199	Valid_Precision@0.50: 0.24653711915016174	Valid_Recall@0.50: 0.9694143533706665	Valid_mAP@0.50: 0.8663301467895508	Valid_F1@0.50: 0.3671385645866394	Inference_Time: 6913.87255859375	
+
+Epoch 28 (29/150)  - LR/Param_group_0: 0.0009249092972749009	LR/Param_group_1: 0.0009249092972749009	
+
+Epoch 29 (30/150)  - Train_PPYoloELoss/loss_cls: 0.6578536033630371	Train_PPYoloELoss/loss_iou: 0.10899186134338379	Train_PPYoloELoss/loss_dfl: 0.761170506477356	Train_PPYoloELoss/loss: 1.3109185695648193	Valid_PPYoloELoss/loss_cls: 0.598293662071228	Valid_PPYoloELoss/loss_iou: 0.10996224731206894	Valid_PPYoloELoss/loss_dfl: 0.77338707447052	Valid_PPYoloELoss/loss: 1.2598927021026611	Valid_Precision@0.50:0.95: 0.20932213962078094	Valid_Recall@0.50:0.95: 0.7643181681632996	Valid_mAP@0.50:0.95: 0.6738387942314148	Valid_F1@0.50:0.95: 0.30838578939437866	Valid_Precision@0.50: 0.24957534670829773	Valid_Recall@0.50: 0.9690943956375122	Valid_mAP@0.50: 0.8698232173919678	Valid_F1@0.50: 0.3706633448600769	Inference_Time: 6883.21630859375	
+
+Epoch 29 (30/150)  - LR/Param_group_0: 0.000919614220940384	LR/Param_group_1: 0.000919614220940384	
+
+Epoch 30 (31/150)  - Train_PPYoloELoss/loss_cls: 0.6453152298927307	Train_PPYoloELoss/loss_iou: 0.10760843753814697	Train_PPYoloELoss/loss_dfl: 0.7528465986251831	Train_PPYoloELoss/loss: 1.2907589673995972	Valid_PPYoloELoss/loss_cls: 0.5964863300323486	Valid_PPYoloELoss/loss_iou: 0.10955707728862762	Valid_PPYoloELoss/loss_dfl: 0.7721133828163147	Valid_PPYoloELoss/loss: 1.2564358711242676	Valid_Precision@0.50:0.95: 0.21658089756965637	Valid_Recall@0.50:0.95: 0.7628159523010254	Valid_mAP@0.50:0.95: 0.6734269261360168	Valid_F1@0.50:0.95: 0.3168007731437683	Valid_Precision@0.50: 0.2576485574245453	Valid_Recall@0.50: 0.9633306264877319	Valid_mAP@0.50: 0.8723101019859314	Valid_F1@0.50: 0.37987157702445984	Inference_Time: 6870.7236328125	
+
+Epoch 30 (31/150)  - LR/Param_group_0: 0.0009141569816634511	LR/Param_group_1: 0.0009141569816634511	
+
+Epoch 31 (32/150)  - Train_PPYoloELoss/loss_cls: 0.646548867225647	Train_PPYoloELoss/loss_iou: 0.10791157931089401	Train_PPYoloELoss/loss_dfl: 0.7506322860717773	Train_PPYoloELoss/loss: 1.2916440963745117	Valid_PPYoloELoss/loss_cls: 0.5936407446861267	Valid_PPYoloELoss/loss_iou: 0.10910072177648544	Valid_PPYoloELoss/loss_dfl: 0.7704005837440491	Valid_PPYoloELoss/loss: 1.251592993736267	Valid_Precision@0.50:0.95: 0.22116778790950775	Valid_Recall@0.50:0.95: 0.7649822235107422	Valid_mAP@0.50:0.95: 0.6736935973167419	Valid_F1@0.50:0.95: 0.3220055103302002	Valid_Precision@0.50: 0.263015478849411	Valid_Recall@0.50: 0.9700364470481873	Valid_mAP@0.50: 0.8703887462615967	Valid_F1@0.50: 0.38619858026504517	Inference_Time: 6877.06494140625	
+
+Epoch 31 (32/150)  - LR/Param_group_0: 0.0009085399737296263	LR/Param_group_1: 0.0009085399737296263	
+
+Epoch 32 (33/150)  - Train_PPYoloELoss/loss_cls: 0.6502478122711182	Train_PPYoloELoss/loss_iou: 0.10722845047712326	Train_PPYoloELoss/loss_dfl: 0.75164794921875	Train_PPYoloELoss/loss: 1.2941434383392334	Valid_PPYoloELoss/loss_cls: 0.5936813354492188	Valid_PPYoloELoss/loss_iou: 0.10830312967300415	Valid_PPYoloELoss/loss_dfl: 0.7681262493133545	Valid_PPYoloELoss/loss: 1.248502254486084	Valid_Precision@0.50:0.95: 0.2201189547777176	Valid_Recall@0.50:0.95: 0.7685195803642273	Valid_mAP@0.50:0.95: 0.6771953701972961	Valid_F1@0.50:0.95: 0.3212972581386566	Valid_Precision@0.50: 0.2609734833240509	Valid_Recall@0.50: 0.972866415977478	Valid_mAP@0.50: 0.871577799320221	Valid_F1@0.50: 0.3842736780643463	Inference_Time: 6883.29345703125	
+
+Epoch 32 (33/150)  - LR/Param_group_0: 0.000902765661520642	LR/Param_group_1: 0.000902765661520642	
+
+Epoch 33 (34/150)  - Train_PPYoloELoss/loss_cls: 0.6433926224708557	Train_PPYoloELoss/loss_iou: 0.10612192749977112	Train_PPYoloELoss/loss_dfl: 0.7451391816139221	Train_PPYoloELoss/loss: 1.2812676429748535	Valid_PPYoloELoss/loss_cls: 0.5906475782394409	Valid_PPYoloELoss/loss_iou: 0.10787872225046158	Valid_PPYoloELoss/loss_dfl: 0.764549195766449	Valid_PPYoloELoss/loss: 1.2426190376281738	Valid_Precision@0.50:0.95: 0.2175569236278534	Valid_Recall@0.50:0.95: 0.769900381565094	Valid_mAP@0.50:0.95: 0.6776258945465088	Valid_F1@0.50:0.95: 0.3195381760597229	Valid_Precision@0.50: 0.2574397027492523	Valid_Recall@0.50: 0.9691005349159241	Valid_mAP@0.50: 0.8736987709999084	Valid_F1@0.50: 0.3812113404273987	Inference_Time: 6891.490234375	
+
+Epoch 33 (34/150)  - LR/Param_group_0: 0.0008968365784332268	LR/Param_group_1: 0.0008968365784332268	
+
+Epoch 34 (35/150)  - Train_PPYoloELoss/loss_cls: 0.6413092613220215	Train_PPYoloELoss/loss_iou: 0.10512662678956985	Train_PPYoloELoss/loss_dfl: 0.7487812042236328	Train_PPYoloELoss/loss: 1.2785160541534424	Valid_PPYoloELoss/loss_cls: 0.5901276469230652	Valid_PPYoloELoss/loss_iou: 0.10760611295700073	Valid_PPYoloELoss/loss_dfl: 0.7629451155662537	Valid_PPYoloELoss/loss: 1.2406152486801147	Valid_Precision@0.50:0.95: 0.22029109299182892	Valid_Recall@0.50:0.95: 0.7693513035774231	Valid_mAP@0.50:0.95: 0.6808508038520813	Valid_F1@0.50:0.95: 0.322689414024353	Valid_Precision@0.50: 0.2602619230747223	Valid_Recall@0.50: 0.9680813550949097	Valid_mAP@0.50: 0.8762322664260864	Valid_F1@0.50: 0.3845353424549103	Inference_Time: 6887.736328125	
+
+Epoch 34 (35/150)  - LR/Param_group_0: 0.0008907553257676144	LR/Param_group_1: 0.0008907553257676144	
+
+Epoch 35 (36/150)  - Train_PPYoloELoss/loss_cls: 0.6403255462646484	Train_PPYoloELoss/loss_iou: 0.1061064749956131	Train_PPYoloELoss/loss_dfl: 0.7486794590950012	Train_PPYoloELoss/loss: 1.2799321413040161	Valid_PPYoloELoss/loss_cls: 0.5920349955558777	Valid_PPYoloELoss/loss_iou: 0.1076502650976181	Valid_PPYoloELoss/loss_dfl: 0.7655080556869507	Valid_PPYoloELoss/loss: 1.2439147233963013	Valid_Precision@0.50:0.95: 0.21987539529800415	Valid_Recall@0.50:0.95: 0.7665342092514038	Valid_mAP@0.50:0.95: 0.6786864399909973	Valid_F1@0.50:0.95: 0.322162389755249	Valid_Precision@0.50: 0.2603413760662079	Valid_Recall@0.50: 0.9684242010116577	Valid_mAP@0.50: 0.8759123682975769	Valid_F1@0.50: 0.3848171532154083	Inference_Time: 6865.93359375	
+
+Epoch 35 (36/150)  - LR/Param_group_0: 0.00088452457158626	LR/Param_group_1: 0.00088452457158626	
+
+Epoch 36 (37/150)  - Train_PPYoloELoss/loss_cls: 0.6411495804786682	Train_PPYoloELoss/loss_iou: 0.1058056503534317	Train_PPYoloELoss/loss_dfl: 0.7443825006484985	Train_PPYoloELoss/loss: 1.2778546810150146	Valid_PPYoloELoss/loss_cls: 0.5898404717445374	Valid_PPYoloELoss/loss_iou: 0.10764439404010773	Valid_PPYoloELoss/loss_dfl: 0.766951858997345	Valid_PPYoloELoss/loss: 1.242427110671997	Valid_Precision@0.50:0.95: 0.2213185876607895	Valid_Recall@0.50:0.95: 0.7629020810127258	Valid_mAP@0.50:0.95: 0.6766398549079895	Valid_F1@0.50:0.95: 0.3234388530254364	Valid_Precision@0.50: 0.26263123750686646	Valid_Recall@0.50: 0.9653937220573425	Valid_mAP@0.50: 0.8732529878616333	Valid_F1@0.50: 0.3870595097541809	Inference_Time: 6857.798828125	
+
+Epoch 36 (37/150)  - LR/Param_group_0: 0.0008781470495432665	LR/Param_group_1: 0.0008781470495432665	
+
+Epoch 37 (38/150)  - Train_PPYoloELoss/loss_cls: 0.6334258317947388	Train_PPYoloELoss/loss_iou: 0.10577094554901123	Train_PPYoloELoss/loss_dfl: 0.7445630431175232	Train_PPYoloELoss/loss: 1.2701356410980225	Valid_PPYoloELoss/loss_cls: 0.5922877788543701	Valid_PPYoloELoss/loss_iou: 0.10715404152870178	Valid_PPYoloELoss/loss_dfl: 0.7630845904350281	Valid_PPYoloELoss/loss: 1.2417149543762207	Valid_Precision@0.50:0.95: 0.22371838986873627	Valid_Recall@0.50:0.95: 0.7671210765838623	Valid_mAP@0.50:0.95: 0.6775112748146057	Valid_F1@0.50:0.95: 0.3266775608062744	Valid_Precision@0.50: 0.2646719813346863	Valid_Recall@0.50: 0.9658482670783997	Valid_mAP@0.50: 0.8723443746566772	Valid_F1@0.50: 0.38963720202445984	Inference_Time: 6877.31982421875	
+
+Epoch 37 (38/150)  - LR/Param_group_0: 0.0008716255576850325	LR/Param_group_1: 0.0008716255576850325	
+
+Epoch 38 (39/150)  - Train_PPYoloELoss/loss_cls: 0.6487905383110046	Train_PPYoloELoss/loss_iou: 0.10699834674596786	Train_PPYoloELoss/loss_dfl: 0.7520973682403564	Train_PPYoloELoss/loss: 1.2923356294631958	Valid_PPYoloELoss/loss_cls: 0.5940715074539185	Valid_PPYoloELoss/loss_iou: 0.10733426362276077	Valid_PPYoloELoss/loss_dfl: 0.7628628611564636	Valid_PPYoloELoss/loss: 1.2438386678695679	Valid_Precision@0.50:0.95: 0.22148346900939941	Valid_Recall@0.50:0.95: 0.764205813407898	Valid_mAP@0.50:0.95: 0.674466073513031	Valid_F1@0.50:0.95: 0.3240399956703186	Valid_Precision@0.50: 0.2623238265514374	Valid_Recall@0.50: 0.9644517302513123	Valid_mAP@0.50: 0.8712037205696106	Valid_F1@0.50: 0.38704222440719604	Inference_Time: 6828.33984375	
+
+Epoch 38 (39/150)  - LR/Param_group_0: 0.0008649629572226501	LR/Param_group_1: 0.0008649629572226501	
+
+Epoch 39 (40/150)  - Train_PPYoloELoss/loss_cls: 0.6306029558181763	Train_PPYoloELoss/loss_iou: 0.10437208414077759	Train_PPYoloELoss/loss_dfl: 0.7419140934944153	Train_PPYoloELoss/loss: 1.2624908685684204	Valid_PPYoloELoss/loss_cls: 0.592484176158905	Valid_PPYoloELoss/loss_iou: 0.1069931834936142	Valid_PPYoloELoss/loss_dfl: 0.7630950212478638	Valid_PPYoloELoss/loss: 1.2415146827697754	Valid_Precision@0.50:0.95: 0.22203092277050018	Valid_Recall@0.50:0.95: 0.7642358541488647	Valid_mAP@0.50:0.95: 0.6750724911689758	Valid_F1@0.50:0.95: 0.3245813846588135	Valid_Precision@0.50: 0.2625042200088501	Valid_Recall@0.50: 0.9596242904663086	Valid_mAP@0.50: 0.871479868888855	Valid_F1@0.50: 0.3867592513561249	Inference_Time: 6809.45263671875	
+
+Epoch 39 (40/150)  - LR/Param_group_0: 0.0008581621712765888	LR/Param_group_1: 0.0008581621712765888	
+
+Epoch 40 (41/150)  - Train_PPYoloELoss/loss_cls: 0.6281298995018005	Train_PPYoloELoss/loss_iou: 0.10414314270019531	Train_PPYoloELoss/loss_dfl: 0.7382573485374451	Train_PPYoloELoss/loss: 1.2576173543930054	Valid_PPYoloELoss/loss_cls: 0.5918002724647522	Valid_PPYoloELoss/loss_iou: 0.10664528608322144	Valid_PPYoloELoss/loss_dfl: 0.7630741000175476	Valid_PPYoloELoss/loss: 1.2399505376815796	Valid_Precision@0.50:0.95: 0.2224574238061905	Valid_Recall@0.50:0.95: 0.765390932559967	Valid_mAP@0.50:0.95: 0.674998939037323	Valid_F1@0.50:0.95: 0.32560378313064575	Valid_Precision@0.50: 0.2632672190666199	Valid_Recall@0.50: 0.9674285054206848	Valid_mAP@0.50: 0.8711670637130737	Valid_F1@0.50: 0.38873937726020813	Inference_Time: 6850.94189453125	
+
+Epoch 40 (41/150)  - LR/Param_group_0: 0.0008512261835942189	LR/Param_group_1: 0.0008512261835942189	
+
+Epoch 41 (42/150)  - Train_PPYoloELoss/loss_cls: 0.6221482157707214	Train_PPYoloELoss/loss_iou: 0.1037217304110527	Train_PPYoloELoss/loss_dfl: 0.7374315857887268	Train_PPYoloELoss/loss: 1.250167965888977	Valid_PPYoloELoss/loss_cls: 0.5933849215507507	Valid_PPYoloELoss/loss_iou: 0.10692375898361206	Valid_PPYoloELoss/loss_dfl: 0.765267014503479	Valid_PPYoloELoss/loss: 1.2433277368545532	Valid_Precision@0.50:0.95: 0.22487664222717285	Valid_Recall@0.50:0.95: 0.7640153169631958	Valid_mAP@0.50:0.95: 0.675388514995575	Valid_F1@0.50:0.95: 0.3290520906448364	Valid_Precision@0.50: 0.26601269841194153	Valid_Recall@0.50: 0.9634100198745728	Valid_mAP@0.50: 0.8695712685585022	Valid_F1@0.50: 0.39261406660079956	Inference_Time: 6827.84423828125	
+
+Epoch 41 (42/150)  - LR/Param_group_0: 0.0008441580372407349	LR/Param_group_1: 0.0008441580372407349	
+
+Epoch 42 (43/150)  - Train_PPYoloELoss/loss_cls: 0.6208336353302002	Train_PPYoloELoss/loss_iou: 0.10336239635944366	Train_PPYoloELoss/loss_dfl: 0.7354432344436646	Train_PPYoloELoss/loss: 1.246961236000061	Valid_PPYoloELoss/loss_cls: 0.5940997004508972	Valid_PPYoloELoss/loss_iou: 0.10724252462387085	Valid_PPYoloELoss/loss_dfl: 0.7659816145896912	Valid_PPYoloELoss/loss: 1.2451967000961304	Valid_Precision@0.50:0.95: 0.23050323128700256	Valid_Recall@0.50:0.95: 0.7675278782844543	Valid_mAP@0.50:0.95: 0.6758338809013367	Valid_F1@0.50:0.95: 0.33502107858657837	Valid_Precision@0.50: 0.27256399393081665	Valid_Recall@0.50: 0.9700638651847839	Valid_mAP@0.50: 0.869216799736023	Valid_F1@0.50: 0.39981386065483093	Inference_Time: 7002.0517578125	
+
+Epoch 42 (43/150)  - LR/Param_group_0: 0.0008369608332640543	LR/Param_group_1: 0.0008369608332640543	
+
+Epoch 43 (44/150)  - Train_PPYoloELoss/loss_cls: 0.6161849498748779	Train_PPYoloELoss/loss_iou: 0.10170372575521469	Train_PPYoloELoss/loss_dfl: 0.732923686504364	Train_PPYoloELoss/loss: 1.2369065284729004	Valid_PPYoloELoss/loss_cls: 0.5964524745941162	Valid_PPYoloELoss/loss_iou: 0.10726944357156754	Valid_PPYoloELoss/loss_dfl: 0.7647968530654907	Valid_PPYoloELoss/loss: 1.2470242977142334	Valid_Precision@0.50:0.95: 0.2337079644203186	Valid_Recall@0.50:0.95: 0.7687541246414185	Valid_mAP@0.50:0.95: 0.6756723523139954	Valid_F1@0.50:0.95: 0.3390175700187683	Valid_Precision@0.50: 0.27590519189834595	Valid_Recall@0.50: 0.9675018787384033	Valid_mAP@0.50: 0.8717799782752991	Valid_F1@0.50: 0.40394437313079834	Inference_Time: 6822.095703125	
+
+Epoch 43 (44/150)  - LR/Param_group_0: 0.0008296377293342771	LR/Param_group_1: 0.0008296377293342771	
+
+Epoch 44 (45/150)  - Train_PPYoloELoss/loss_cls: 0.6165692806243896	Train_PPYoloELoss/loss_iou: 0.10177890211343765	Train_PPYoloELoss/loss_dfl: 0.7300600409507751	Train_PPYoloELoss/loss: 1.2360461950302124	Valid_PPYoloELoss/loss_cls: 0.5943682789802551	Valid_PPYoloELoss/loss_iou: 0.10728894174098969	Valid_PPYoloELoss/loss_dfl: 0.7650420069694519	Valid_PPYoloELoss/loss: 1.2451118230819702	Valid_Precision@0.50:0.95: 0.2314915657043457	Valid_Recall@0.50:0.95: 0.7648499011993408	Valid_mAP@0.50:0.95: 0.6751452088356018	Valid_F1@0.50:0.95: 0.3362269997596741	Valid_Precision@0.50: 0.2738686203956604	Valid_Recall@0.50: 0.9676365256309509	Valid_mAP@0.50: 0.8722204566001892	Valid_F1@0.50: 0.4016231298446655	Inference_Time: 6796.74267578125	
+
+Epoch 44 (45/150)  - LR/Param_group_0: 0.0008221919383583037	LR/Param_group_1: 0.0008221919383583037	
+
+Epoch 45 (46/150)  - Train_PPYoloELoss/loss_cls: 0.6043822765350342	Train_PPYoloELoss/loss_iou: 0.10050338506698608	Train_PPYoloELoss/loss_dfl: 0.7274730205535889	Train_PPYoloELoss/loss: 1.2193762063980103	Valid_PPYoloELoss/loss_cls: 0.5935492515563965	Valid_PPYoloELoss/loss_iou: 0.10742230713367462	Valid_PPYoloELoss/loss_dfl: 0.7649164199829102	Valid_PPYoloELoss/loss: 1.2445629835128784	Valid_Precision@0.50:0.95: 0.23159310221672058	Valid_Recall@0.50:0.95: 0.7672052979469299	Valid_mAP@0.50:0.95: 0.6789441108703613	Valid_F1@0.50:0.95: 0.3363482356071472	Valid_Precision@0.50: 0.2729744017124176	Valid_Recall@0.50: 0.9671358466148376	Valid_mAP@0.50: 0.8742755055427551	Valid_F1@0.50: 0.40029090642929077	Inference_Time: 6800.43896484375	
+
+Epoch 45 (46/150)  - LR/Param_group_0: 0.0008146267270702173	LR/Param_group_1: 0.0008146267270702173	
+
+Epoch 46 (47/150)  - Train_PPYoloELoss/loss_cls: 0.6077256798744202	Train_PPYoloELoss/loss_iou: 0.1013655737042427	Train_PPYoloELoss/loss_dfl: 0.7287471890449524	Train_PPYoloELoss/loss: 1.2255127429962158	Valid_PPYoloELoss/loss_cls: 0.5906527638435364	Valid_PPYoloELoss/loss_iou: 0.10733012109994888	Valid_PPYoloELoss/loss_dfl: 0.7655256986618042	Valid_PPYoloELoss/loss: 1.2417407035827637	Valid_Precision@0.50:0.95: 0.23550178110599518	Valid_Recall@0.50:0.95: 0.7650191783905029	Valid_mAP@0.50:0.95: 0.6779060363769531	Valid_F1@0.50:0.95: 0.3405027389526367	Valid_Precision@0.50: 0.2781105041503906	Valid_Recall@0.50: 0.9646584987640381	Valid_mAP@0.50: 0.8747657537460327	Valid_F1@0.50: 0.40595436096191406	Inference_Time: 6804.8212890625	
+
+Epoch 46 (47/150)  - LR/Param_group_0: 0.0008069454145980521	LR/Param_group_1: 0.0008069454145980521	
+
+Epoch 47 (48/150)  - Train_PPYoloELoss/loss_cls: 0.6031402945518494	Train_PPYoloELoss/loss_iou: 0.09941121190786362	Train_PPYoloELoss/loss_dfl: 0.7215852737426758	Train_PPYoloELoss/loss: 1.2124607563018799	Valid_PPYoloELoss/loss_cls: 0.5907509326934814	Valid_PPYoloELoss/loss_iou: 0.10720405727624893	Valid_PPYoloELoss/loss_dfl: 0.7650909423828125	Valid_PPYoloELoss/loss: 1.2413064241409302	Valid_Precision@0.50:0.95: 0.240110844373703	Valid_Recall@0.50:0.95: 0.7671559453010559	Valid_mAP@0.50:0.95: 0.6782057285308838	Valid_F1@0.50:0.95: 0.34603801369667053	Valid_Precision@0.50: 0.28291672468185425	Valid_Recall@0.50: 0.9649032354354858	Valid_mAP@0.50: 0.8754986524581909	Valid_F1@0.50: 0.411692351102829	Inference_Time: 6823.51025390625	
+
+Epoch 47 (48/150)  - LR/Param_group_0: 0.0007991513710075723	LR/Param_group_1: 0.0007991513710075723	
+
+Epoch 48 (49/150)  - Train_PPYoloELoss/loss_cls: 0.601469099521637	Train_PPYoloELoss/loss_iou: 0.09956898540258408	Train_PPYoloELoss/loss_dfl: 0.72378009557724	Train_PPYoloELoss/loss: 1.2122818231582642	Valid_PPYoloELoss/loss_cls: 0.5900882482528687	Valid_PPYoloELoss/loss_iou: 0.10720490664243698	Valid_PPYoloELoss/loss_dfl: 0.7662316560745239	Valid_PPYoloELoss/loss: 1.2412163019180298	Valid_Precision@0.50:0.95: 0.2440149039030075	Valid_Recall@0.50:0.95: 0.7702715992927551	Valid_mAP@0.50:0.95: 0.6802741289138794	Valid_F1@0.50:0.95: 0.35072970390319824	Valid_Precision@0.50: 0.28807470202445984	Valid_Recall@0.50: 0.9707499146461487	Valid_mAP@0.50: 0.8790435791015625	Valid_F1@0.50: 0.41815152764320374	Inference_Time: 6785.814453125	
+
+Epoch 48 (49/150)  - LR/Param_group_0: 0.0007912480158237056	LR/Param_group_1: 0.0007912480158237056	
+
+Epoch 49 (50/150)  - Train_PPYoloELoss/loss_cls: 0.6065376400947571	Train_PPYoloELoss/loss_iou: 0.09909355640411377	Train_PPYoloELoss/loss_dfl: 0.722885012626648	Train_PPYoloELoss/loss: 1.215713381767273	Valid_PPYoloELoss/loss_cls: 0.5874049663543701	Valid_PPYoloELoss/loss_iou: 0.10722047090530396	Valid_PPYoloELoss/loss_dfl: 0.7663332223892212	Valid_PPYoloELoss/loss: 1.238623023033142	Valid_Precision@0.50:0.95: 0.24860423803329468	Valid_Recall@0.50:0.95: 0.7709464430809021	Valid_mAP@0.50:0.95: 0.6836278438568115	Valid_F1@0.50:0.95: 0.3554992973804474	Valid_Precision@0.50: 0.2924969792366028	Valid_Recall@0.50: 0.967762291431427	Valid_mAP@0.50: 0.8796014189720154	Valid_F1@0.50: 0.42247775197029114	Inference_Time: 6780.064453125	
+
+Epoch 49 (50/150)  - LR/Param_group_0: 0.0007832388165302739	LR/Param_group_1: 0.0007832388165302739	
+
+Epoch 50 (51/150)  - Train_PPYoloELoss/loss_cls: 0.6037853956222534	Train_PPYoloELoss/loss_iou: 0.09905600547790527	Train_PPYoloELoss/loss_dfl: 0.7233671545982361	Train_PPYoloELoss/loss: 1.2131084203720093	Valid_PPYoloELoss/loss_cls: 0.5859816670417786	Valid_PPYoloELoss/loss_iou: 0.10730421543121338	Valid_PPYoloELoss/loss_dfl: 0.7656872868537903	Valid_PPYoloELoss/loss: 1.2370860576629639	Valid_Precision@0.50:0.95: 0.2471592277288437	Valid_Recall@0.50:0.95: 0.7699537873268127	Valid_mAP@0.50:0.95: 0.684276282787323	Valid_F1@0.50:0.95: 0.3543115556240082	Valid_Precision@0.50: 0.29114624857902527	Valid_Recall@0.50: 0.9656043648719788	Valid_mAP@0.50: 0.88130122423172	Valid_F1@0.50: 0.4214572310447693	Inference_Time: 6799.169921875	
+
+Epoch 50 (51/150)  - LR/Param_group_0: 0.0007751272870486857	LR/Param_group_1: 0.0007751272870486857	
+
+Epoch 51 (52/150)  - Train_PPYoloELoss/loss_cls: 0.5933552980422974	Train_PPYoloELoss/loss_iou: 0.09921801835298538	Train_PPYoloELoss/loss_dfl: 0.7225618362426758	Train_PPYoloELoss/loss: 1.2026809453964233	Valid_PPYoloELoss/loss_cls: 0.5846143960952759	Valid_PPYoloELoss/loss_iou: 0.10695485770702362	Valid_PPYoloELoss/loss_dfl: 0.7642925381660461	Valid_PPYoloELoss/loss: 1.2341476678848267	Valid_Precision@0.50:0.95: 0.24668270349502563	Valid_Recall@0.50:0.95: 0.7691435813903809	Valid_mAP@0.50:0.95: 0.6835955381393433	Valid_F1@0.50:0.95: 0.35392728447914124	Valid_Precision@0.50: 0.2906443178653717	Valid_Recall@0.50: 0.9649111032485962	Valid_mAP@0.50: 0.8797264695167542	Valid_F1@0.50: 0.42111361026763916	Inference_Time: 6754.56787109375	
+
+Epoch 51 (52/150)  - LR/Param_group_0: 0.000766916986196253	LR/Param_group_1: 0.000766916986196253	
+
+Epoch 52 (53/150)  - Train_PPYoloELoss/loss_cls: 0.602065920829773	Train_PPYoloELoss/loss_iou: 0.09976367652416229	Train_PPYoloELoss/loss_dfl: 0.7259182333946228	Train_PPYoloELoss/loss: 1.2144341468811035	Valid_PPYoloELoss/loss_cls: 0.5842435359954834	Valid_PPYoloELoss/loss_iou: 0.10666563361883163	Valid_PPYoloELoss/loss_dfl: 0.7646571397781372	Valid_PPYoloELoss/loss: 1.2332360744476318	Valid_Precision@0.50:0.95: 0.24921005964279175	Valid_Recall@0.50:0.95: 0.769866943359375	Valid_mAP@0.50:0.95: 0.6845253109931946	Valid_F1@0.50:0.95: 0.3569366931915283	Valid_Precision@0.50: 0.2934679090976715	Valid_Recall@0.50: 0.965605616569519	Valid_mAP@0.50: 0.8797181844711304	Valid_F1@0.50: 0.42445749044418335	Inference_Time: 6789.26171875	
+
+Epoch 52 (53/150)  - LR/Param_group_0: 0.000758611516124811	LR/Param_group_1: 0.000758611516124811	
+
+Epoch 53 (54/150)  - Train_PPYoloELoss/loss_cls: 0.6018555760383606	Train_PPYoloELoss/loss_iou: 0.0986311212182045	Train_PPYoloELoss/loss_dfl: 0.7247806191444397	Train_PPYoloELoss/loss: 1.2108240127563477	Valid_PPYoloELoss/loss_cls: 0.5829843282699585	Valid_PPYoloELoss/loss_iou: 0.10639642924070358	Valid_PPYoloELoss/loss_dfl: 0.7637098431587219	Valid_PPYoloELoss/loss: 1.230830430984497	Valid_Precision@0.50:0.95: 0.2581067979335785	Valid_Recall@0.50:0.95: 0.7705992460250854	Valid_mAP@0.50:0.95: 0.6848567724227905	Valid_F1@0.50:0.95: 0.3654444217681885	Valid_Precision@0.50: 0.30366337299346924	Valid_Recall@0.50: 0.9654022455215454	Valid_mAP@0.50: 0.8796899318695068	Valid_F1@0.50: 0.4342650771141052	Inference_Time: 6792.19580078125	
+
+Epoch 53 (54/150)  - LR/Param_group_0: 0.0007502145207403263	LR/Param_group_1: 0.0007502145207403263	
+
+Epoch 54 (55/150)  - Train_PPYoloELoss/loss_cls: 0.5952306389808655	Train_PPYoloELoss/loss_iou: 0.09874013066291809	Train_PPYoloELoss/loss_dfl: 0.7232277989387512	Train_PPYoloELoss/loss: 1.203694462776184	Valid_PPYoloELoss/loss_cls: 0.582034707069397	Valid_PPYoloELoss/loss_iou: 0.10612742602825165	Valid_PPYoloELoss/loss_dfl: 0.7639922499656677	Valid_PPYoloELoss/loss: 1.2293497323989868	Valid_Precision@0.50:0.95: 0.2585543096065521	Valid_Recall@0.50:0.95: 0.7709041833877563	Valid_mAP@0.50:0.95: 0.6870849132537842	Valid_F1@0.50:0.95: 0.3662042021751404	Valid_Precision@0.50: 0.30389681458473206	Valid_Recall@0.50: 0.9658301472663879	Valid_mAP@0.50: 0.8804517984390259	Valid_F1@0.50: 0.4347359538078308	Inference_Time: 6763.00439453125	
+
+Epoch 54 (55/150)  - LR/Param_group_0: 0.0007417296841041846	LR/Param_group_1: 0.0007417296841041846	
+
+Epoch 55 (56/150)  - Train_PPYoloELoss/loss_cls: 0.5904638171195984	Train_PPYoloELoss/loss_iou: 0.09748607873916626	Train_PPYoloELoss/loss_dfl: 0.7183882594108582	Train_PPYoloELoss/loss: 1.1933729648590088	Valid_PPYoloELoss/loss_cls: 0.5799118280410767	Valid_PPYoloELoss/loss_iou: 0.1059117391705513	Valid_PPYoloELoss/loss_dfl: 0.7629640102386475	Valid_PPYoloELoss/loss: 1.2261730432510376	Valid_Precision@0.50:0.95: 0.2576705813407898	Valid_Recall@0.50:0.95: 0.7682962417602539	Valid_mAP@0.50:0.95: 0.6861481666564941	Valid_F1@0.50:0.95: 0.3658123314380646	Valid_Precision@0.50: 0.3035135567188263	Valid_Recall@0.50: 0.9621409773826599	Valid_mAP@0.50: 0.8806428909301758	Valid_F1@0.50: 0.4350760579109192	Inference_Time: 6768.7802734375	
+
+Epoch 55 (56/150)  - LR/Param_group_0: 0.0007331607288168621	LR/Param_group_1: 0.0007331607288168621	
+
+Epoch 56 (57/150)  - Train_PPYoloELoss/loss_cls: 0.5963106155395508	Train_PPYoloELoss/loss_iou: 0.09811048209667206	Train_PPYoloELoss/loss_dfl: 0.7219894528388977	Train_PPYoloELoss/loss: 1.2025803327560425	Valid_PPYoloELoss/loss_cls: 0.5797052979469299	Valid_PPYoloELoss/loss_iou: 0.10587058961391449	Valid_PPYoloELoss/loss_dfl: 0.7625059485435486	Valid_PPYoloELoss/loss: 1.2256346940994263	Valid_Precision@0.50:0.95: 0.25974762439727783	Valid_Recall@0.50:0.95: 0.7697096467018127	Valid_mAP@0.50:0.95: 0.6868229508399963	Valid_F1@0.50:0.95: 0.36805135011672974	Valid_Precision@0.50: 0.3063001036643982	Valid_Recall@0.50: 0.965450644493103	Valid_mAP@0.50: 0.8806672692298889	Valid_F1@0.50: 0.43818962574005127	Inference_Time: 6792.24658203125	
+
+Epoch 56 (57/150)  - LR/Param_group_0: 0.0007245114143846872	LR/Param_group_1: 0.0007245114143846872	
+
+Epoch 57 (58/150)  - Train_PPYoloELoss/loss_cls: 0.5850029587745667	Train_PPYoloELoss/loss_iou: 0.09627983719110489	Train_PPYoloELoss/loss_dfl: 0.7135410308837891	Train_PPYoloELoss/loss: 1.1824731826782227	Valid_PPYoloELoss/loss_cls: 0.5793313980102539	Valid_PPYoloELoss/loss_iou: 0.1059519350528717	Valid_PPYoloELoss/loss_dfl: 0.7637019753456116	Valid_PPYoloELoss/loss: 1.2260621786117554	Valid_Precision@0.50:0.95: 0.26221534609794617	Valid_Recall@0.50:0.95: 0.7693085074424744	Valid_mAP@0.50:0.95: 0.6874845027923584	Valid_F1@0.50:0.95: 0.371028870344162	Valid_Precision@0.50: 0.309034138917923	Valid_Recall@0.50: 0.9668242335319519	Valid_mAP@0.50: 0.8807648420333862	Valid_F1@0.50: 0.44175484776496887	Inference_Time: 6709.224609375	
+
+Epoch 57 (58/150)  - LR/Param_group_0: 0.0007157855355704122	LR/Param_group_1: 0.0007157855355704122	
+
+Epoch 58 (59/150)  - Train_PPYoloELoss/loss_cls: 0.5928102731704712	Train_PPYoloELoss/loss_iou: 0.09715186059474945	Train_PPYoloELoss/loss_dfl: 0.7203872203826904	Train_PPYoloELoss/loss: 1.1958833932876587	Valid_PPYoloELoss/loss_cls: 0.5785379409790039	Valid_PPYoloELoss/loss_iou: 0.10587558895349503	Valid_PPYoloELoss/loss_dfl: 0.7640419006347656	Valid_PPYoloELoss/loss: 1.2252479791641235	Valid_Precision@0.50:0.95: 0.2605995535850525	Valid_Recall@0.50:0.95: 0.7716902494430542	Valid_mAP@0.50:0.95: 0.6893952488899231	Valid_F1@0.50:0.95: 0.3699851632118225	Valid_Precision@0.50: 0.305826872587204	Valid_Recall@0.50: 0.9627423882484436	Valid_mAP@0.50: 0.879452109336853	Valid_F1@0.50: 0.4383733570575714	Inference_Time: 6708.01806640625	
+
+Epoch 58 (59/150)  - LR/Param_group_0: 0.0007069869207283141	LR/Param_group_1: 0.0007069869207283141	
+
+Epoch 59 (60/150)  - Train_PPYoloELoss/loss_cls: 0.5868434906005859	Train_PPYoloELoss/loss_iou: 0.09616659581661224	Train_PPYoloELoss/loss_dfl: 0.7165161967277527	Train_PPYoloELoss/loss: 1.1855193376541138	Valid_PPYoloELoss/loss_cls: 0.5779579281806946	Valid_PPYoloELoss/loss_iou: 0.10584952682256699	Valid_PPYoloELoss/loss_dfl: 0.7646012902259827	Valid_PPYoloELoss/loss: 1.2248822450637817	Valid_Precision@0.50:0.95: 0.2651219367980957	Valid_Recall@0.50:0.95: 0.7730845808982849	Valid_mAP@0.50:0.95: 0.6892465949058533	Valid_F1@0.50:0.95: 0.37490159273147583	Valid_Precision@0.50: 0.3109428584575653	Valid_Recall@0.50: 0.9645934700965881	Valid_mAP@0.50: 0.8799275159835815	Valid_F1@0.50: 0.4440814256668091	Inference_Time: 6743.67529296875	
+
+Epoch 59 (60/150)  - LR/Param_group_0: 0.0006981194301245601	LR/Param_group_1: 0.0006981194301245601	
+
+Epoch 60 (61/150)  - Train_PPYoloELoss/loss_cls: 0.5908464193344116	Train_PPYoloELoss/loss_iou: 0.09669400006532669	Train_PPYoloELoss/loss_dfl: 0.7175979018211365	Train_PPYoloELoss/loss: 1.1913803815841675	Valid_PPYoloELoss/loss_cls: 0.5775100588798523	Valid_PPYoloELoss/loss_iou: 0.10553672164678574	Valid_PPYoloELoss/loss_dfl: 0.7629849314689636	Valid_PPYoloELoss/loss: 1.2228443622589111	Valid_Precision@0.50:0.95: 0.2657832205295563	Valid_Recall@0.50:0.95: 0.7707247734069824	Valid_mAP@0.50:0.95: 0.6877174973487854	Valid_F1@0.50:0.95: 0.37510910630226135	Valid_Precision@0.50: 0.3124470114707947	Valid_Recall@0.50: 0.9646878838539124	Valid_mAP@0.50: 0.8808891773223877	Valid_F1@0.50: 0.44542884826660156	Inference_Time: 6718.48291015625	
+
+Epoch 60 (61/150)  - LR/Param_group_0: 0.0006891869542435707	LR/Param_group_1: 0.0006891869542435707	
+
+Epoch 61 (62/150)  - Train_PPYoloELoss/loss_cls: 0.5857232213020325	Train_PPYoloELoss/loss_iou: 0.09622219204902649	Train_PPYoloELoss/loss_dfl: 0.7149018049240112	Train_PPYoloELoss/loss: 1.1837297677993774	Valid_PPYoloELoss/loss_cls: 0.5809459090232849	Valid_PPYoloELoss/loss_iou: 0.10567066818475723	Valid_PPYoloELoss/loss_dfl: 0.7632575035095215	Valid_PPYoloELoss/loss: 1.226751446723938	Valid_Precision@0.50:0.95: 0.2674573063850403	Valid_Recall@0.50:0.95: 0.7735595107078552	Valid_mAP@0.50:0.95: 0.688702404499054	Valid_F1@0.50:0.95: 0.37686654925346375	Valid_Precision@0.50: 0.31339231133461	Valid_Recall@0.50: 0.963657021522522	Valid_mAP@0.50: 0.8790426254272461	Valid_F1@0.50: 0.44601190090179443	Inference_Time: 6745.79931640625	
+
+Epoch 61 (62/150)  - LR/Param_group_0: 0.0006801934120811255	LR/Param_group_1: 0.0006801934120811255	
+
+Epoch 62 (63/150)  - Train_PPYoloELoss/loss_cls: 0.5799404978752136	Train_PPYoloELoss/loss_iou: 0.0951286256313324	Train_PPYoloELoss/loss_dfl: 0.7142968773841858	Train_PPYoloELoss/loss: 1.1749111413955688	Valid_PPYoloELoss/loss_cls: 0.5814911127090454	Valid_PPYoloELoss/loss_iou: 0.10571172833442688	Valid_PPYoloELoss/loss_dfl: 0.762904942035675	Valid_PPYoloELoss/loss: 1.2272226810455322	Valid_Precision@0.50:0.95: 0.2685820162296295	Valid_Recall@0.50:0.95: 0.7718366980552673	Valid_mAP@0.50:0.95: 0.6880195736885071	Valid_F1@0.50:0.95: 0.3777185082435608	Valid_Precision@0.50: 0.31481119990348816	Valid_Recall@0.50: 0.9619224071502686	Valid_mAP@0.50: 0.8790854811668396	Valid_F1@0.50: 0.4471692442893982	Inference_Time: 6781.80517578125	
+
+Epoch 62 (63/150)  - LR/Param_group_0: 0.0006711427494249598	LR/Param_group_1: 0.0006711427494249598	
+
+Epoch 63 (64/150)  - Train_PPYoloELoss/loss_cls: 0.577778697013855	Train_PPYoloELoss/loss_iou: 0.09456004202365875	Train_PPYoloELoss/loss_dfl: 0.7115518450737	Train_PPYoloELoss/loss: 1.169954776763916	Valid_PPYoloELoss/loss_cls: 0.5834837555885315	Valid_PPYoloELoss/loss_iou: 0.10590244829654694	Valid_PPYoloELoss/loss_dfl: 0.7646567821502686	Valid_PPYoloELoss/loss: 1.2305680513381958	Valid_Precision@0.50:0.95: 0.2725870907306671	Valid_Recall@0.50:0.95: 0.7684481143951416	Valid_mAP@0.50:0.95: 0.6870352625846863	Valid_F1@0.50:0.95: 0.38135725259780884	Valid_Precision@0.50: 0.3197641670703888	Valid_Recall@0.50: 0.9620064496994019	Valid_mAP@0.50: 0.879616379737854	Valid_F1@0.50: 0.4522116780281067	Inference_Time: 6759.86181640625	
+
+Epoch 63 (64/150)  - LR/Param_group_0: 0.0006620389371236067	LR/Param_group_1: 0.0006620389371236067	
+
+Epoch 64 (65/150)  - Train_PPYoloELoss/loss_cls: 0.5762304663658142	Train_PPYoloELoss/loss_iou: 0.09434705227613449	Train_PPYoloELoss/loss_dfl: 0.7082671523094177	Train_PPYoloELoss/loss: 1.1662315130233765	Valid_PPYoloELoss/loss_cls: 0.583634078502655	Valid_PPYoloELoss/loss_iou: 0.1061115562915802	Valid_PPYoloELoss/loss_dfl: 0.7662996053695679	Valid_PPYoloELoss/loss: 1.232062578201294	Valid_Precision@0.50:0.95: 0.27242231369018555	Valid_Recall@0.50:0.95: 0.7680084109306335	Valid_mAP@0.50:0.95: 0.6884569525718689	Valid_F1@0.50:0.95: 0.3815617561340332	Valid_Precision@0.50: 0.3195917010307312	Valid_Recall@0.50: 0.9607264399528503	Valid_mAP@0.50: 0.8803569078445435	Valid_F1@0.50: 0.4524683356285095	Inference_Time: 6749.93212890625	
+
+Epoch 64 (65/150)  - LR/Param_group_0: 0.0006528859693442452	LR/Param_group_1: 0.0006528859693442452	
+
+Epoch 65 (66/150)  - Train_PPYoloELoss/loss_cls: 0.5724203586578369	Train_PPYoloELoss/loss_iou: 0.09411156922578812	Train_PPYoloELoss/loss_dfl: 0.7078479528427124	Train_PPYoloELoss/loss: 1.1616237163543701	Valid_PPYoloELoss/loss_cls: 0.5815011858940125	Valid_PPYoloELoss/loss_iou: 0.10583820194005966	Valid_PPYoloELoss/loss_dfl: 0.764411211013794	Valid_PPYoloELoss/loss: 1.2283027172088623	Valid_Precision@0.50:0.95: 0.2783449590206146	Valid_Recall@0.50:0.95: 0.7684463858604431	Valid_mAP@0.50:0.95: 0.6897620558738708	Valid_F1@0.50:0.95: 0.38704338669776917	Valid_Precision@0.50: 0.32677555084228516	Valid_Recall@0.50: 0.9616377353668213	Valid_mAP@0.50: 0.8809477686882019	Valid_F1@0.50: 0.45935365557670593	Inference_Time: 6711.8681640625	
+
+Epoch 65 (66/150)  - LR/Param_group_0: 0.000643687861820315	LR/Param_group_1: 0.000643687861820315	
+
+Epoch 66 (67/150)  - Train_PPYoloELoss/loss_cls: 0.5695410370826721	Train_PPYoloELoss/loss_iou: 0.09338117390871048	Train_PPYoloELoss/loss_dfl: 0.7028902769088745	Train_PPYoloELoss/loss: 1.1544393301010132	Valid_PPYoloELoss/loss_cls: 0.583744466304779	Valid_PPYoloELoss/loss_iou: 0.10589081794023514	Valid_PPYoloELoss/loss_dfl: 0.7650051116943359	Valid_PPYoloELoss/loss: 1.2309736013412476	Valid_Precision@0.50:0.95: 0.2807095944881439	Valid_Recall@0.50:0.95: 0.7668704390525818	Valid_mAP@0.50:0.95: 0.6882688999176025	Valid_F1@0.50:0.95: 0.3893095552921295	Valid_Precision@0.50: 0.32993799448013306	Valid_Recall@0.50: 0.961466372013092	Valid_mAP@0.50: 0.8801853656768799	Valid_F1@0.50: 0.46267274022102356	Inference_Time: 6715.13232421875	
+
+Epoch 66 (67/150)  - LR/Param_group_0: 0.0006344486500896723	LR/Param_group_1: 0.0006344486500896723	
+
+Epoch 67 (68/150)  - Train_PPYoloELoss/loss_cls: 0.5688056945800781	Train_PPYoloELoss/loss_iou: 0.09349054843187332	Train_PPYoloELoss/loss_dfl: 0.7079209685325623	Train_PPYoloELoss/loss: 1.1564931869506836	Valid_PPYoloELoss/loss_cls: 0.5842132568359375	Valid_PPYoloELoss/loss_iou: 0.10562829673290253	Valid_PPYoloELoss/loss_dfl: 0.7650147676467896	Valid_PPYoloELoss/loss: 1.2307915687561035	Valid_Precision@0.50:0.95: 0.281139075756073	Valid_Recall@0.50:0.95: 0.7676665782928467	Valid_mAP@0.50:0.95: 0.6884893774986267	Valid_F1@0.50:0.95: 0.39012792706489563	Valid_Precision@0.50: 0.3299853205680847	Valid_Recall@0.50: 0.9599519968032837	Valid_mAP@0.50: 0.8782100081443787	Valid_F1@0.50: 0.46284934878349304	Inference_Time: 6709.2626953125	
+
+Epoch 67 (68/150)  - LR/Param_group_0: 0.0006251723877240548	LR/Param_group_1: 0.0006251723877240548	
+
+Epoch 68 (69/150)  - Train_PPYoloELoss/loss_cls: 0.5753082036972046	Train_PPYoloELoss/loss_iou: 0.09412514418363571	Train_PPYoloELoss/loss_dfl: 0.7112852931022644	Train_PPYoloELoss/loss: 1.1662635803222656	Valid_PPYoloELoss/loss_cls: 0.5810383558273315	Valid_PPYoloELoss/loss_iou: 0.10552629083395004	Valid_PPYoloELoss/loss_dfl: 0.76409912109375	Valid_PPYoloELoss/loss: 1.2269033193588257	Valid_Precision@0.50:0.95: 0.28728434443473816	Valid_Recall@0.50:0.95: 0.7682587504386902	Valid_mAP@0.50:0.95: 0.6895955204963684	Valid_F1@0.50:0.95: 0.39582008123397827	Valid_Precision@0.50: 0.33722686767578125	Valid_Recall@0.50: 0.9635447859764099	Valid_mAP@0.50: 0.8791732788085938	Valid_F1@0.50: 0.46993425488471985	Inference_Time: 6782.0830078125	
+
+Epoch 68 (69/150)  - LR/Param_group_0: 0.000615863144550635	LR/Param_group_1: 0.000615863144550635	
+
+Epoch 69 (70/150)  - Train_PPYoloELoss/loss_cls: 0.5705365538597107	Train_PPYoloELoss/loss_iou: 0.09335356950759888	Train_PPYoloELoss/loss_dfl: 0.7042945623397827	Train_PPYoloELoss/loss: 1.1560677289962769	Valid_PPYoloELoss/loss_cls: 0.5774637460708618	Valid_PPYoloELoss/loss_iou: 0.10526382923126221	Valid_PPYoloELoss/loss_dfl: 0.7610940933227539	Valid_PPYoloELoss/loss: 1.2211706638336182	Valid_Precision@0.50:0.95: 0.28370487689971924	Valid_Recall@0.50:0.95: 0.7691558599472046	Valid_mAP@0.50:0.95: 0.6902284026145935	Valid_F1@0.50:0.95: 0.3925125300884247	Valid_Precision@0.50: 0.33274227380752563	Valid_Recall@0.50: 0.9620364904403687	Valid_mAP@0.50: 0.8793202042579651	Valid_F1@0.50: 0.465456485748291	Inference_Time: 6752.8857421875	
+
+Epoch 69 (70/150)  - LR/Param_group_0: 0.0006065250048664429	LR/Param_group_1: 0.0006065250048664429	
+
+Epoch 70 (71/150)  - Train_PPYoloELoss/loss_cls: 0.5807449817657471	Train_PPYoloELoss/loss_iou: 0.09247325360774994	Train_PPYoloELoss/loss_dfl: 0.7076612710952759	Train_PPYoloELoss/loss: 1.1657588481903076	Valid_PPYoloELoss/loss_cls: 0.574076235294342	Valid_PPYoloELoss/loss_iou: 0.10443730652332306	Valid_PPYoloELoss/loss_dfl: 0.7580488324165344	Valid_PPYoloELoss/loss: 1.2141941785812378	Valid_Precision@0.50:0.95: 0.28503918647766113	Valid_Recall@0.50:0.95: 0.7699172496795654	Valid_mAP@0.50:0.95: 0.6928286552429199	Valid_F1@0.50:0.95: 0.3939724862575531	Valid_Precision@0.50: 0.33318743109703064	Valid_Recall@0.50: 0.9598172903060913	Valid_mAP@0.50: 0.8813686966896057	Valid_F1@0.50: 0.4655820429325104	Inference_Time: 6691.63134765625	
+
+Epoch 70 (71/150)  - LR/Param_group_0: 0.0005971620656464375	LR/Param_group_1: 0.0005971620656464375	
+
+Epoch 71 (72/150)  - Train_PPYoloELoss/loss_cls: 0.5660213828086853	Train_PPYoloELoss/loss_iou: 0.09149834513664246	Train_PPYoloELoss/loss_dfl: 0.7040956616401672	Train_PPYoloELoss/loss: 1.1468143463134766	Valid_PPYoloELoss/loss_cls: 0.5721770524978638	Valid_PPYoloELoss/loss_iou: 0.1041758731007576	Valid_PPYoloELoss/loss_dfl: 0.7557056546211243	Valid_PPYoloELoss/loss: 1.2104698419570923	Valid_Precision@0.50:0.95: 0.28670021891593933	Valid_Recall@0.50:0.95: 0.772408664226532	Valid_mAP@0.50:0.95: 0.6932193040847778	Valid_F1@0.50:0.95: 0.3957459330558777	Valid_Precision@0.50: 0.33527934551239014	Valid_Recall@0.50: 0.9643248319625854	Valid_mAP@0.50: 0.8842055201530457	Valid_F1@0.50: 0.4680846631526947	Inference_Time: 6712.4091796875	
+
+Epoch 71 (72/150)  - LR/Param_group_0: 0.0005877784347460196	LR/Param_group_1: 0.0005877784347460196	
+
+Epoch 72 (73/150)  - Train_PPYoloELoss/loss_cls: 0.5594051480293274	Train_PPYoloELoss/loss_iou: 0.0911153107881546	Train_PPYoloELoss/loss_dfl: 0.6995686292648315	Train_PPYoloELoss/loss: 1.1369765996932983	Valid_PPYoloELoss/loss_cls: 0.5723270773887634	Valid_PPYoloELoss/loss_iou: 0.10454626381397247	Valid_PPYoloELoss/loss_dfl: 0.7569685578346252	Valid_PPYoloELoss/loss: 1.212177038192749	Valid_Precision@0.50:0.95: 0.28991052508354187	Valid_Recall@0.50:0.95: 0.7722762823104858	Valid_mAP@0.50:0.95: 0.6942275762557983	Valid_F1@0.50:0.95: 0.39869794249534607	Valid_Precision@0.50: 0.3391566276550293	Valid_Recall@0.50: 0.962725043296814	Valid_mAP@0.50: 0.8854613900184631	Valid_F1@0.50: 0.4717314839363098	Inference_Time: 6727.451171875	
+
+Epoch 72 (73/150)  - LR/Param_group_0: 0.000578378229098768	LR/Param_group_1: 0.000578378229098768	
+
+Epoch 73 (74/150)  - Train_PPYoloELoss/loss_cls: 0.56380295753479	Train_PPYoloELoss/loss_iou: 0.09062889963388443	Train_PPYoloELoss/loss_dfl: 0.6997089385986328	Train_PPYoloELoss/loss: 1.1402299404144287	Valid_PPYoloELoss/loss_cls: 0.5711196064949036	Valid_PPYoloELoss/loss_iou: 0.10495144873857498	Valid_PPYoloELoss/loss_dfl: 0.7601078152656555	Valid_PPYoloELoss/loss: 1.2135517597198486	Valid_Precision@0.50:0.95: 0.2891596555709839	Valid_Recall@0.50:0.95: 0.7699527740478516	Valid_mAP@0.50:0.95: 0.6949498653411865	Valid_F1@0.50:0.95: 0.3982659578323364	Valid_Precision@0.50: 0.338617205619812	Valid_Recall@0.50: 0.9626083970069885	Valid_mAP@0.50: 0.8850303888320923	Valid_F1@0.50: 0.4718322157859802	Inference_Time: 6693.2158203125	
+
+Epoch 73 (74/150)  - LR/Param_group_0: 0.0005689655729101938	LR/Param_group_1: 0.0005689655729101938	
+
+Epoch 74 (75/150)  - Train_PPYoloELoss/loss_cls: 0.5633159279823303	Train_PPYoloELoss/loss_iou: 0.09161090105772018	Train_PPYoloELoss/loss_dfl: 0.7050797939300537	Train_PPYoloELoss/loss: 1.1448824405670166	Valid_PPYoloELoss/loss_cls: 0.5693534016609192	Valid_PPYoloELoss/loss_iou: 0.10494542121887207	Valid_PPYoloELoss/loss_dfl: 0.7607569098472595	Valid_PPYoloELoss/loss: 1.2120956182479858	Valid_Precision@0.50:0.95: 0.292933851480484	Valid_Recall@0.50:0.95: 0.769570529460907	Valid_mAP@0.50:0.95: 0.6951426863670349	Valid_F1@0.50:0.95: 0.4020254611968994	Valid_Precision@0.50: 0.34359803795814514	Valid_Recall@0.50: 0.9611613154411316	Valid_mAP@0.50: 0.8852602243423462	Valid_F1@0.50: 0.47675514221191406	Inference_Time: 6703.90625	
+
+Epoch 74 (75/150)  - LR/Param_group_0: 0.000559544595848305	LR/Param_group_1: 0.000559544595848305	
+
+Epoch 75 (76/150)  - Train_PPYoloELoss/loss_cls: 0.5601558685302734	Train_PPYoloELoss/loss_iou: 0.09075181186199188	Train_PPYoloELoss/loss_dfl: 0.6966596841812134	Train_PPYoloELoss/loss: 1.1353650093078613	Valid_PPYoloELoss/loss_cls: 0.5691790580749512	Valid_PPYoloELoss/loss_iou: 0.10476859658956528	Valid_PPYoloELoss/loss_dfl: 0.7606388926506042	Valid_PPYoloELoss/loss: 1.2114201784133911	Valid_Precision@0.50:0.95: 0.2940180003643036	Valid_Recall@0.50:0.95: 0.7688626050949097	Valid_mAP@0.50:0.95: 0.6947639584541321	Valid_F1@0.50:0.95: 0.4035627245903015	Valid_Precision@0.50: 0.3441984951496124	Valid_Recall@0.50: 0.9585164785385132	Valid_mAP@0.50: 0.8846092224121094	Valid_F1@0.50: 0.4776829183101654	Inference_Time: 6679.24462890625	
+
+Epoch 75 (76/150)  - LR/Param_group_0: 0.0005501194312317734	LR/Param_group_1: 0.0005501194312317734	
+
+Epoch 76 (77/150)  - Train_PPYoloELoss/loss_cls: 0.5599412322044373	Train_PPYoloELoss/loss_iou: 0.09112027287483215	Train_PPYoloELoss/loss_dfl: 0.698176920413971	Train_PPYoloELoss/loss: 1.1368296146392822	Valid_PPYoloELoss/loss_cls: 0.5657133460044861	Valid_PPYoloELoss/loss_iou: 0.10423708707094193	Valid_PPYoloELoss/loss_dfl: 0.7581721544265747	Valid_PPYoloELoss/loss: 1.2053918838500977	Valid_Precision@0.50:0.95: 0.29888880252838135	Valid_Recall@0.50:0.95: 0.7709836363792419	Valid_mAP@0.50:0.95: 0.6975365877151489	Valid_F1@0.50:0.95: 0.4090438485145569	Valid_Precision@0.50: 0.3491867184638977	Valid_Recall@0.50: 0.9582903385162354	Valid_mAP@0.50: 0.8856755495071411	Valid_F1@0.50: 0.48320677876472473	Inference_Time: 6721.69482421875	
+
+Epoch 76 (77/150)  - LR/Param_group_0: 0.0005406942142165004	LR/Param_group_1: 0.0005406942142165004	
+
+Epoch 77 (78/150)  - Train_PPYoloELoss/loss_cls: 0.5535120368003845	Train_PPYoloELoss/loss_iou: 0.08976996690034866	Train_PPYoloELoss/loss_dfl: 0.6965528726577759	Train_PPYoloELoss/loss: 1.1262130737304688	Valid_PPYoloELoss/loss_cls: 0.5668010711669922	Valid_PPYoloELoss/loss_iou: 0.1040930226445198	Valid_PPYoloELoss/loss_dfl: 0.7570297122001648	Valid_PPYoloELoss/loss: 1.2055484056472778	Valid_Precision@0.50:0.95: 0.2986234724521637	Valid_Recall@0.50:0.95: 0.7733311057090759	Valid_mAP@0.50:0.95: 0.6993651390075684	Valid_F1@0.50:0.95: 0.4090266227722168	Valid_Precision@0.50: 0.3481416702270508	Valid_Recall@0.50: 0.9575793743133545	Valid_mAP@0.50: 0.8854132890701294	Valid_F1@0.50: 0.4820510149002075	Inference_Time: 6703.38525390625	
+
+Epoch 77 (78/150)  - LR/Param_group_0: 0.0005312730799813768	LR/Param_group_1: 0.0005312730799813768	
+
+Epoch 78 (79/150)  - Train_PPYoloELoss/loss_cls: 0.5504874587059021	Train_PPYoloELoss/loss_iou: 0.08939829468727112	Train_PPYoloELoss/loss_dfl: 0.6959784030914307	Train_PPYoloELoss/loss: 1.121972918510437	Valid_PPYoloELoss/loss_cls: 0.5671669244766235	Valid_PPYoloELoss/loss_iou: 0.10386590659618378	Valid_PPYoloELoss/loss_dfl: 0.7556309700012207	Valid_PPYoloELoss/loss: 1.204647183418274	Valid_Precision@0.50:0.95: 0.29841116070747375	Valid_Recall@0.50:0.95: 0.7732208371162415	Valid_mAP@0.50:0.95: 0.6988487839698792	Valid_F1@0.50:0.95: 0.4089311957359314	Valid_Precision@0.50: 0.34818488359451294	Valid_Recall@0.50: 0.9584985375404358	Valid_mAP@0.50: 0.8870795965194702	Valid_F1@0.50: 0.48235049843788147	Inference_Time: 6656.2021484375	
+
+Epoch 78 (79/150)  - LR/Param_group_0: 0.0005218601619140318	LR/Param_group_1: 0.0005218601619140318	
+
+Epoch 79 (80/150)  - Train_PPYoloELoss/loss_cls: 0.5622960925102234	Train_PPYoloELoss/loss_iou: 0.09114614129066467	Train_PPYoloELoss/loss_dfl: 0.7003147602081299	Train_PPYoloELoss/loss: 1.1403182744979858	Valid_PPYoloELoss/loss_cls: 0.5680873990058899	Valid_PPYoloELoss/loss_iou: 0.10394449532032013	Valid_PPYoloELoss/loss_dfl: 0.7561079263687134	Valid_PPYoloELoss/loss: 1.2060022354125977	Valid_Precision@0.50:0.95: 0.3015458881855011	Valid_Recall@0.50:0.95: 0.7773017883300781	Valid_mAP@0.50:0.95: 0.7004430890083313	Valid_F1@0.50:0.95: 0.41259604692459106	Valid_Precision@0.50: 0.3505900502204895	Valid_Recall@0.50: 0.9613694548606873	Valid_mAP@0.50: 0.8872684240341187	Valid_F1@0.50: 0.48507916927337646	Inference_Time: 6697.93505859375	
+
+Epoch 79 (80/150)  - LR/Param_group_0: 0.0005124595897973688	LR/Param_group_1: 0.0005124595897973688	
+
+Epoch 80 (81/150)  - Train_PPYoloELoss/loss_cls: 0.5523832440376282	Train_PPYoloELoss/loss_iou: 0.08903083950281143	Train_PPYoloELoss/loss_dfl: 0.6968030333518982	Train_PPYoloELoss/loss: 1.123362421989441	Valid_PPYoloELoss/loss_cls: 0.5678567290306091	Valid_PPYoloELoss/loss_iou: 0.10388205200433731	Valid_PPYoloELoss/loss_dfl: 0.7555359601974487	Valid_PPYoloELoss/loss: 1.2053296566009521	Valid_Precision@0.50:0.95: 0.30297353863716125	Valid_Recall@0.50:0.95: 0.7763641476631165	Valid_mAP@0.50:0.95: 0.6988165378570557	Valid_F1@0.50:0.95: 0.414112389087677	Valid_Precision@0.50: 0.35228756070137024	Valid_Recall@0.50: 0.9584874510765076	Valid_mAP@0.50: 0.88662189245224	Valid_F1@0.50: 0.48682576417922974	Inference_Time: 6667.390625	
+
+Epoch 80 (81/150)  - LR/Param_group_0: 0.0005030754879976825	LR/Param_group_1: 0.0005030754879976825	
+
+Epoch 81 (82/150)  - Train_PPYoloELoss/loss_cls: 0.5526284575462341	Train_PPYoloELoss/loss_iou: 0.08950229734182358	Train_PPYoloELoss/loss_dfl: 0.6952472925186157	Train_PPYoloELoss/loss: 1.1240074634552002	Valid_PPYoloELoss/loss_cls: 0.5668889880180359	Valid_PPYoloELoss/loss_iou: 0.10374370217323303	Valid_PPYoloELoss/loss_dfl: 0.754460334777832	Valid_PPYoloELoss/loss: 1.2034783363342285	Valid_Precision@0.50:0.95: 0.30402523279190063	Valid_Recall@0.50:0.95: 0.7735865116119385	Valid_mAP@0.50:0.95: 0.6976066827774048	Valid_F1@0.50:0.95: 0.41482821106910706	Valid_Precision@0.50: 0.3539923131465912	Valid_Recall@0.50: 0.9585164785385132	Valid_mAP@0.50: 0.887893557548523	Valid_F1@0.50: 0.48859086632728577	Inference_Time: 6661.2158203125	
+
+Epoch 81 (82/150)  - LR/Param_group_0: 0.0004937119736551519	LR/Param_group_1: 0.0004937119736551519	
+
+Epoch 82 (83/150)  - Train_PPYoloELoss/loss_cls: 0.5510210990905762	Train_PPYoloELoss/loss_iou: 0.08862534165382385	Train_PPYoloELoss/loss_dfl: 0.6931232810020447	Train_PPYoloELoss/loss: 1.1191463470458984	Valid_PPYoloELoss/loss_cls: 0.5675135850906372	Valid_PPYoloELoss/loss_iou: 0.10367126017808914	Valid_PPYoloELoss/loss_dfl: 0.754073441028595	Valid_PPYoloELoss/loss: 1.2037283182144165	Valid_Precision@0.50:0.95: 0.3035386800765991	Valid_Recall@0.50:0.95: 0.7742154598236084	Valid_mAP@0.50:0.95: 0.6972178816795349	Valid_F1@0.50:0.95: 0.4148467183113098	Valid_Precision@0.50: 0.353441447019577	Valid_Recall@0.50: 0.9588959813117981	Valid_mAP@0.50: 0.8859390616416931	Valid_F1@0.50: 0.48851415514945984	Inference_Time: 6692.4453125	
+
+Epoch 82 (83/150)  - LR/Param_group_0: 0.000484373154877504	LR/Param_group_1: 0.000484373154877504	
+
+Epoch 83 (84/150)  - Train_PPYoloELoss/loss_cls: 0.5474473834037781	Train_PPYoloELoss/loss_iou: 0.08870402723550797	Train_PPYoloELoss/loss_dfl: 0.6918238997459412	Train_PPYoloELoss/loss: 1.1151196956634521	Valid_PPYoloELoss/loss_cls: 0.5670027136802673	Valid_PPYoloELoss/loss_iou: 0.10343010723590851	Valid_PPYoloELoss/loss_dfl: 0.7540373802185059	Valid_PPYoloELoss/loss: 1.202596664428711	Valid_Precision@0.50:0.95: 0.3085889518260956	Valid_Recall@0.50:0.95: 0.7756582498550415	Valid_mAP@0.50:0.95: 0.696847140789032	Valid_F1@0.50:0.95: 0.4199053645133972	Valid_Precision@0.50: 0.35837894678115845	Valid_Recall@0.50: 0.9576139450073242	Valid_mAP@0.50: 0.8851730823516846	Valid_F1@0.50: 0.4931965172290802	Inference_Time: 6663.3056640625	
+
+Epoch 83 (84/150)  - LR/Param_group_0: 0.000475063128937641	LR/Param_group_1: 0.000475063128937641	
+
+Epoch 84 (85/150)  - Train_PPYoloELoss/loss_cls: 0.5475882291793823	Train_PPYoloELoss/loss_iou: 0.08826711773872375	Train_PPYoloELoss/loss_dfl: 0.6975319981575012	Train_PPYoloELoss/loss: 1.1170222759246826	Valid_PPYoloELoss/loss_cls: 0.5672330260276794	Valid_PPYoloELoss/loss_iou: 0.10339562594890594	Valid_PPYoloELoss/loss_dfl: 0.7555151581764221	Valid_PPYoloELoss/loss: 1.2034796476364136	Valid_Precision@0.50:0.95: 0.3096494674682617	Valid_Recall@0.50:0.95: 0.7738993763923645	Valid_mAP@0.50:0.95: 0.6960307359695435	Valid_F1@0.50:0.95: 0.4212350845336914	Valid_Precision@0.50: 0.36065948009490967	Valid_Recall@0.50: 0.9587793946266174	Valid_mAP@0.50: 0.8853235840797424	Valid_F1@0.50: 0.49621421098709106	Inference_Time: 6670.8916015625	
+
+Epoch 84 (85/150)  - LR/Param_group_0: 0.0004657859804760201	LR/Param_group_1: 0.0004657859804760201	
+
+Epoch 85 (86/150)  - Train_PPYoloELoss/loss_cls: 0.5449857115745544	Train_PPYoloELoss/loss_iou: 0.08797265589237213	Train_PPYoloELoss/loss_dfl: 0.6921166181564331	Train_PPYoloELoss/loss: 1.1109750270843506	Valid_PPYoloELoss/loss_cls: 0.5673651695251465	Valid_PPYoloELoss/loss_iou: 0.10319439321756363	Valid_PPYoloELoss/loss_dfl: 0.7546928524971008	Valid_PPYoloELoss/loss: 1.20269775390625	Valid_Precision@0.50:0.95: 0.3132806122303009	Valid_Recall@0.50:0.95: 0.7742055654525757	Valid_mAP@0.50:0.95: 0.6956695318222046	Valid_F1@0.50:0.95: 0.42487600445747375	Valid_Precision@0.50: 0.3652227222919464	Valid_Recall@0.50: 0.9599268436431885	Valid_mAP@0.50: 0.8865874409675598	Valid_F1@0.50: 0.5009949207305908	Inference_Time: 6651.05517578125	
+
+Epoch 85 (86/150)  - LR/Param_group_0: 0.00045654577970857596	LR/Param_group_1: 0.00045654577970857596	
+
+Epoch 86 (87/150)  - Train_PPYoloELoss/loss_cls: 0.548726499080658	Train_PPYoloELoss/loss_iou: 0.0879945307970047	Train_PPYoloELoss/loss_dfl: 0.6912088990211487	Train_PPYoloELoss/loss: 1.1143178939819336	Valid_PPYoloELoss/loss_cls: 0.5662721395492554	Valid_PPYoloELoss/loss_iou: 0.10281488299369812	Valid_PPYoloELoss/loss_dfl: 0.754133939743042	Valid_PPYoloELoss/loss: 1.2003765106201172	Valid_Precision@0.50:0.95: 0.31525877118110657	Valid_Recall@0.50:0.95: 0.7736949920654297	Valid_mAP@0.50:0.95: 0.6961233615875244	Valid_F1@0.50:0.95: 0.42683255672454834	Valid_Precision@0.50: 0.36699536442756653	Valid_Recall@0.50: 0.957179605960846	Valid_mAP@0.50: 0.8852875232696533	Valid_F1@0.50: 0.502464234828949	Inference_Time: 6683.61376953125	
+
+Epoch 86 (87/150)  - LR/Param_group_0: 0.00044734658064097204	LR/Param_group_1: 0.00044734658064097204	
+
+Epoch 87 (88/150)  - Train_PPYoloELoss/loss_cls: 0.5423509478569031	Train_PPYoloELoss/loss_iou: 0.0879165306687355	Train_PPYoloELoss/loss_dfl: 0.6879056692123413	Train_PPYoloELoss/loss: 1.1060948371887207	Valid_PPYoloELoss/loss_cls: 0.5665476322174072	Valid_PPYoloELoss/loss_iou: 0.10258810967206955	Valid_PPYoloELoss/loss_dfl: 0.7527010440826416	Valid_PPYoloELoss/loss: 1.1993684768676758	Valid_Precision@0.50:0.95: 0.31746745109558105	Valid_Recall@0.50:0.95: 0.7734043598175049	Valid_mAP@0.50:0.95: 0.6963696479797363	Valid_F1@0.50:0.95: 0.4286854863166809	Valid_Precision@0.50: 0.3691862225532532	Valid_Recall@0.50: 0.9567539691925049	Valid_mAP@0.50: 0.8857285976409912	Valid_F1@0.50: 0.5044003129005432	Inference_Time: 6626.8310546875	
+
+Epoch 87 (88/150)  - LR/Param_group_0: 0.0004381924192899632	LR/Param_group_1: 0.0004381924192899632	
+
+Epoch 88 (89/150)  - Train_PPYoloELoss/loss_cls: 0.5423018336296082	Train_PPYoloELoss/loss_iou: 0.08773209899663925	Train_PPYoloELoss/loss_dfl: 0.6881517767906189	Train_PPYoloELoss/loss: 1.1057087182998657	Valid_PPYoloELoss/loss_cls: 0.5668330192565918	Valid_PPYoloELoss/loss_iou: 0.10289658606052399	Valid_PPYoloELoss/loss_dfl: 0.7544928789138794	Valid_PPYoloELoss/loss: 1.2013211250305176	Valid_Precision@0.50:0.95: 0.3169068992137909	Valid_Recall@0.50:0.95: 0.7744115591049194	Valid_mAP@0.50:0.95: 0.6975022554397583	Valid_F1@0.50:0.95: 0.4283820390701294	Valid_Precision@0.50: 0.3685067296028137	Valid_Recall@0.50: 0.9567539691925049	Valid_mAP@0.50: 0.8829873204231262	Valid_F1@0.50: 0.5038748979568481	Inference_Time: 6607.72802734375	
+
+Epoch 88 (89/150)  - LR/Param_group_0: 0.00042908731191265237	LR/Param_group_1: 0.00042908731191265237	
+
+Epoch 89 (90/150)  - Train_PPYoloELoss/loss_cls: 0.5404322743415833	Train_PPYoloELoss/loss_iou: 0.08743050694465637	Train_PPYoloELoss/loss_dfl: 0.6863648295402527	Train_PPYoloELoss/loss: 1.1021910905838013	Valid_PPYoloELoss/loss_cls: 0.5661901235580444	Valid_PPYoloELoss/loss_iou: 0.10265755653381348	Valid_PPYoloELoss/loss_dfl: 0.753799557685852	Valid_PPYoloELoss/loss: 1.1997339725494385	Valid_Precision@0.50:0.95: 0.31645411252975464	Valid_Recall@0.50:0.95: 0.7712376117706299	Valid_mAP@0.50:0.95: 0.6954402327537537	Valid_F1@0.50:0.95: 0.4278618395328522	Valid_Precision@0.50: 0.3688616156578064	Valid_Recall@0.50: 0.9544181823730469	Valid_mAP@0.50: 0.882071852684021	Valid_F1@0.50: 0.5045532584190369	Inference_Time: 6636.70556640625	
+
+Epoch 89 (90/150)  - LR/Param_group_0: 0.00042003525324441375	LR/Param_group_1: 0.00042003525324441375	
+
+Epoch 90 (91/150)  - Train_PPYoloELoss/loss_cls: 0.5436403155326843	Train_PPYoloELoss/loss_iou: 0.08640365302562714	Train_PPYoloELoss/loss_dfl: 0.6850748062133789	Train_PPYoloELoss/loss: 1.1021872758865356	Valid_PPYoloELoss/loss_cls: 0.5670013427734375	Valid_PPYoloELoss/loss_iou: 0.10276176035404205	Valid_PPYoloELoss/loss_dfl: 0.7542652487754822	Valid_PPYoloELoss/loss: 1.2010383605957031	Valid_Precision@0.50:0.95: 0.31626439094543457	Valid_Recall@0.50:0.95: 0.7704814076423645	Valid_mAP@0.50:0.95: 0.6963653564453125	Valid_F1@0.50:0.95: 0.4272505044937134	Valid_Precision@0.50: 0.3687945604324341	Valid_Recall@0.50: 0.9568089246749878	Valid_mAP@0.50: 0.884314775466919	Valid_F1@0.50: 0.5042556524276733	Inference_Time: 6665.84521484375	
+
+Epoch 90 (91/150)  - LR/Param_group_0: 0.0004110402147462612	LR/Param_group_1: 0.0004110402147462612	
+
+Epoch 91 (92/150)  - Train_PPYoloELoss/loss_cls: 0.5409496426582336	Train_PPYoloELoss/loss_iou: 0.08697423338890076	Train_PPYoloELoss/loss_dfl: 0.6859642267227173	Train_PPYoloELoss/loss: 1.1013669967651367	Valid_PPYoloELoss/loss_cls: 0.5654223561286926	Valid_PPYoloELoss/loss_iou: 0.10331062972545624	Valid_PPYoloELoss/loss_dfl: 0.7568284273147583	Valid_PPYoloELoss/loss: 1.202113151550293	Valid_Precision@0.50:0.95: 0.31615597009658813	Valid_Recall@0.50:0.95: 0.7703304290771484	Valid_mAP@0.50:0.95: 0.6946719884872437	Valid_F1@0.50:0.95: 0.4272345304489136	Valid_Precision@0.50: 0.3687523603439331	Valid_Recall@0.50: 0.9571517705917358	Valid_mAP@0.50: 0.8821617364883423	Valid_F1@0.50: 0.5043610334396362	Inference_Time: 6629.9384765625	
+
+Epoch 91 (92/150)  - LR/Param_group_0: 0.0004021061428624256	LR/Param_group_1: 0.0004021061428624256	
+
+Epoch 92 (93/150)  - Train_PPYoloELoss/loss_cls: 0.5350413918495178	Train_PPYoloELoss/loss_iou: 0.08600417524576187	Train_PPYoloELoss/loss_dfl: 0.6839308738708496	Train_PPYoloELoss/loss: 1.0920166969299316	Valid_PPYoloELoss/loss_cls: 0.5659722685813904	Valid_PPYoloELoss/loss_iou: 0.10362248122692108	Valid_PPYoloELoss/loss_dfl: 0.7582523822784424	Valid_PPYoloELoss/loss: 1.20415461063385	Valid_Precision@0.50:0.95: 0.32021835446357727	Valid_Recall@0.50:0.95: 0.7690601348876953	Valid_mAP@0.50:0.95: 0.6948843598365784	Valid_F1@0.50:0.95: 0.42996907234191895	Valid_Precision@0.50: 0.37354224920272827	Valid_Recall@0.50: 0.9557781219482422	Valid_mAP@0.50: 0.8852123022079468	Valid_F1@0.50: 0.5077536106109619	Inference_Time: 6692.513671875	
+
+Epoch 92 (93/150)  - LR/Param_group_0: 0.0003932369572889104	LR/Param_group_1: 0.0003932369572889104	
+
+Epoch 93 (94/150)  - Train_PPYoloELoss/loss_cls: 0.5384264588356018	Train_PPYoloELoss/loss_iou: 0.0863623172044754	Train_PPYoloELoss/loss_dfl: 0.6873418688774109	Train_PPYoloELoss/loss: 1.0980030298233032	Valid_PPYoloELoss/loss_cls: 0.5649060010910034	Valid_PPYoloELoss/loss_iou: 0.10409695655107498	Valid_PPYoloELoss/loss_dfl: 0.7597492933273315	Valid_PPYoloELoss/loss: 1.205022931098938	Valid_Precision@0.50:0.95: 0.32148870825767517	Valid_Recall@0.50:0.95: 0.7645052671432495	Valid_mAP@0.50:0.95: 0.6948232054710388	Valid_F1@0.50:0.95: 0.4305530786514282	Valid_Precision@0.50: 0.374865859746933	Valid_Recall@0.50: 0.9501127004623413	Valid_mAP@0.50: 0.8860769867897034	Valid_F1@0.50: 0.5082281231880188	Inference_Time: 6654.65576171875	
+
+Epoch 93 (94/150)  - LR/Param_group_0: 0.00038443654925377944	LR/Param_group_1: 0.00038443654925377944	
+
+Epoch 94 (95/150)  - Train_PPYoloELoss/loss_cls: 0.5371962189674377	Train_PPYoloELoss/loss_iou: 0.08610918372869492	Train_PPYoloELoss/loss_dfl: 0.6856434941291809	Train_PPYoloELoss/loss: 1.0952914953231812	Valid_PPYoloELoss/loss_cls: 0.5660427808761597	Valid_PPYoloELoss/loss_iou: 0.10401766747236252	Valid_PPYoloELoss/loss_dfl: 0.7594922780990601	Valid_PPYoloELoss/loss: 1.2058331966400146	Valid_Precision@0.50:0.95: 0.3208572268486023	Valid_Recall@0.50:0.95: 0.7645017504692078	Valid_mAP@0.50:0.95: 0.6944072842597961	Valid_F1@0.50:0.95: 0.4301412105560303	Valid_Precision@0.50: 0.37360793352127075	Valid_Recall@0.50: 0.9474388957023621	Valid_mAP@0.50: 0.88487309217453	Valid_F1@0.50: 0.5068498253822327	Inference_Time: 6626.95654296875	
+
+Epoch 94 (95/150)  - LR/Param_group_0: 0.00037570877980993753	LR/Param_group_1: 0.00037570877980993753	
+
+Epoch 95 (96/150)  - Train_PPYoloELoss/loss_cls: 0.5366792678833008	Train_PPYoloELoss/loss_iou: 0.08638869971036911	Train_PPYoloELoss/loss_dfl: 0.683179497718811	Train_PPYoloELoss/loss: 1.0942409038543701	Valid_PPYoloELoss/loss_cls: 0.5668359398841858	Valid_PPYoloELoss/loss_iou: 0.1041359230875969	Valid_PPYoloELoss/loss_dfl: 0.759865403175354	Valid_PPYoloELoss/loss: 1.207108736038208	Valid_Precision@0.50:0.95: 0.3247731924057007	Valid_Recall@0.50:0.95: 0.766720175743103	Valid_mAP@0.50:0.95: 0.6957878470420837	Valid_F1@0.50:0.95: 0.43385326862335205	Valid_Precision@0.50: 0.3778495192527771	Valid_Recall@0.50: 0.9506345987319946	Valid_mAP@0.50: 0.8837823271751404	Valid_F1@0.50: 0.5109584927558899	Inference_Time: 6658.5029296875	
+
+Epoch 95 (96/150)  - LR/Param_group_0: 0.00036705747814114853	LR/Param_group_1: 0.00036705747814114853	
+
+Epoch 96 (97/150)  - Train_PPYoloELoss/loss_cls: 0.5343585014343262	Train_PPYoloELoss/loss_iou: 0.08527299016714096	Train_PPYoloELoss/loss_dfl: 0.6828661561012268	Train_PPYoloELoss/loss: 1.0889739990234375	Valid_PPYoloELoss/loss_cls: 0.5671575665473938	Valid_PPYoloELoss/loss_iou: 0.10428830981254578	Valid_PPYoloELoss/loss_dfl: 0.7610522508621216	Valid_PPYoloELoss/loss: 1.2084046602249146	Valid_Precision@0.50:0.95: 0.3258684277534485	Valid_Recall@0.50:0.95: 0.7689175605773926	Valid_mAP@0.50:0.95: 0.6971580386161804	Valid_F1@0.50:0.95: 0.4352508783340454	Valid_Precision@0.50: 0.3783892095088959	Valid_Recall@0.50: 0.9476179480552673	Valid_mAP@0.50: 0.8848051428794861	Valid_F1@0.50: 0.5111854076385498	Inference_Time: 6677.32421875	
+
+Epoch 96 (97/150)  - LR/Param_group_0: 0.00035848643988203616	LR/Param_group_1: 0.00035848643988203616	
+
+Epoch 97 (98/150)  - Train_PPYoloELoss/loss_cls: 0.5339306592941284	Train_PPYoloELoss/loss_iou: 0.08579984307289124	Train_PPYoloELoss/loss_dfl: 0.6846041083335876	Train_PPYoloELoss/loss: 1.0907325744628906	Valid_PPYoloELoss/loss_cls: 0.5663501024246216	Valid_PPYoloELoss/loss_iou: 0.10420548170804977	Valid_PPYoloELoss/loss_dfl: 0.760795533657074	Valid_PPYoloELoss/loss: 1.2072616815567017	Valid_Precision@0.50:0.95: 0.33166399598121643	Valid_Recall@0.50:0.95: 0.770534873008728	Valid_mAP@0.50:0.95: 0.698793888092041	Valid_F1@0.50:0.95: 0.4407011866569519	Valid_Precision@0.50: 0.3846449553966522	Valid_Recall@0.50: 0.9484270811080933	Valid_mAP@0.50: 0.8837810158729553	Valid_F1@0.50: 0.5170031785964966	Inference_Time: 6598.0078125	
+
+Epoch 97 (98/150)  - LR/Param_group_0: 0.00034999942545280334	LR/Param_group_1: 0.00034999942545280334	
+
+Epoch 98 (99/150)  - Train_PPYoloELoss/loss_cls: 0.5322297811508179	Train_PPYoloELoss/loss_iou: 0.0859101265668869	Train_PPYoloELoss/loss_dfl: 0.6789087653160095	Train_PPYoloELoss/loss: 1.0864598751068115	Valid_PPYoloELoss/loss_cls: 0.5669254064559937	Valid_PPYoloELoss/loss_iou: 0.1041436642408371	Valid_PPYoloELoss/loss_dfl: 0.7602291703224182	Valid_PPYoloELoss/loss: 1.2073993682861328	Valid_Precision@0.50:0.95: 0.3347378075122833	Valid_Recall@0.50:0.95: 0.7687335014343262	Valid_mAP@0.50:0.95: 0.6992071270942688	Valid_F1@0.50:0.95: 0.44347646832466125	Valid_Precision@0.50: 0.38899582624435425	Valid_Recall@0.50: 0.9485677480697632	Valid_mAP@0.50: 0.8827498555183411	Valid_F1@0.50: 0.5213717222213745	Inference_Time: 6620.93359375	
+
+Epoch 98 (99/150)  - LR/Param_group_0: 0.00034160015840940117	LR/Param_group_1: 0.00034160015840940117	
+
+Epoch 99 (100/150)  - Train_PPYoloELoss/loss_cls: 0.5296009182929993	Train_PPYoloELoss/loss_iou: 0.0840814858675003	Train_PPYoloELoss/loss_dfl: 0.6779694557189941	Train_PPYoloELoss/loss: 1.078789472579956	Valid_PPYoloELoss/loss_cls: 0.5667492747306824	Valid_PPYoloELoss/loss_iou: 0.1039055809378624	Valid_PPYoloELoss/loss_dfl: 0.7586482763290405	Valid_PPYoloELoss/loss: 1.205837368965149	Valid_Precision@0.50:0.95: 0.33227840065956116	Valid_Recall@0.50:0.95: 0.7671959400177002	Valid_mAP@0.50:0.95: 0.6984957456588745	Valid_F1@0.50:0.95: 0.44179120659828186	Valid_Precision@0.50: 0.38642871379852295	Valid_Recall@0.50: 0.9451830387115479	Valid_mAP@0.50: 0.8802950382232666	Valid_F1@0.50: 0.5195406675338745	Inference_Time: 6613.56103515625	
+
+Epoch 99 (100/150)  - LR/Param_group_0: 0.0003332923238098733	LR/Param_group_1: 0.0003332923238098733	
+
+Epoch 100 (101/150)  - Train_PPYoloELoss/loss_cls: 0.5300807356834412	Train_PPYoloELoss/loss_iou: 0.08406943082809448	Train_PPYoloELoss/loss_dfl: 0.6800183057785034	Train_PPYoloELoss/loss: 1.0802627801895142	Valid_PPYoloELoss/loss_cls: 0.568827211856842	Valid_PPYoloELoss/loss_iou: 0.10346516966819763	Valid_PPYoloELoss/loss_dfl: 0.7569032907485962	Valid_PPYoloELoss/loss: 1.2059416770935059	Valid_Precision@0.50:0.95: 0.3304998278617859	Valid_Recall@0.50:0.95: 0.7668251991271973	Valid_mAP@0.50:0.95: 0.697383463382721	Valid_F1@0.50:0.95: 0.4405509829521179	Valid_Precision@0.50: 0.38487955927848816	Valid_Recall@0.50: 0.9444721937179565	Valid_mAP@0.50: 0.87892746925354	Valid_F1@0.50: 0.5185724496841431	Inference_Time: 6633.5849609375	
+
+Epoch 100 (101/150)  - LR/Param_group_0: 0.0003250795665975893	LR/Param_group_1: 0.0003250795665975893	
+
+Epoch 101 (102/150)  - Train_PPYoloELoss/loss_cls: 0.5242412686347961	Train_PPYoloELoss/loss_iou: 0.08336547762155533	Train_PPYoloELoss/loss_dfl: 0.6778340935707092	Train_PPYoloELoss/loss: 1.0715720653533936	Valid_PPYoloELoss/loss_cls: 0.5703995823860168	Valid_PPYoloELoss/loss_iou: 0.10336168855428696	Valid_PPYoloELoss/loss_dfl: 0.7571723461151123	Valid_PPYoloELoss/loss: 1.2073900699615479	Valid_Precision@0.50:0.95: 0.33708736300468445	Valid_Recall@0.50:0.95: 0.7664480209350586	Valid_mAP@0.50:0.95: 0.6976339817047119	Valid_F1@0.50:0.95: 0.44576898217201233	Valid_Precision@0.50: 0.39179596304893494	Valid_Recall@0.50: 0.9427125453948975	Valid_mAP@0.50: 0.8787155151367188	Valid_F1@0.50: 0.5237292051315308	Inference_Time: 6603.2744140625	
+
+Epoch 101 (102/150)  - LR/Param_group_0: 0.0003169654900020769	LR/Param_group_1: 0.0003169654900020769	
+
+Epoch 102 (103/150)  - Train_PPYoloELoss/loss_cls: 0.5279073715209961	Train_PPYoloELoss/loss_iou: 0.08386900275945663	Train_PPYoloELoss/loss_dfl: 0.6801049113273621	Train_PPYoloELoss/loss: 1.0776324272155762	Valid_PPYoloELoss/loss_cls: 0.5712029933929443	Valid_PPYoloELoss/loss_iou: 0.10330797731876373	Valid_PPYoloELoss/loss_dfl: 0.7585521936416626	Valid_PPYoloELoss/loss: 1.208749532699585	Valid_Precision@0.50:0.95: 0.3442314863204956	Valid_Recall@0.50:0.95: 0.7689202427864075	Valid_mAP@0.50:0.95: 0.6980451941490173	Valid_F1@0.50:0.95: 0.45233845710754395	Valid_Precision@0.50: 0.40024706721305847	Valid_Recall@0.50: 0.9477403163909912	Valid_mAP@0.50: 0.8778781890869141	Valid_F1@0.50: 0.5318896770477295	Inference_Time: 6613.060546875	
+
+Epoch 102 (103/150)  - LR/Param_group_0: 0.0003089536539581581	LR/Param_group_1: 0.0003089536539581581	
+
+Epoch 103 (104/150)  - Train_PPYoloELoss/loss_cls: 0.5193681716918945	Train_PPYoloELoss/loss_iou: 0.08272794634103775	Train_PPYoloELoss/loss_dfl: 0.6768283247947693	Train_PPYoloELoss/loss: 1.064602255821228	Valid_PPYoloELoss/loss_cls: 0.5703590512275696	Valid_PPYoloELoss/loss_iou: 0.10340408980846405	Valid_PPYoloELoss/loss_dfl: 0.7597547173500061	Valid_PPYoloELoss/loss: 1.2087464332580566	Valid_Precision@0.50:0.95: 0.3454444408416748	Valid_Recall@0.50:0.95: 0.7663865089416504	Valid_mAP@0.50:0.95: 0.6961822509765625	Valid_F1@0.50:0.95: 0.452993780374527	Valid_Precision@0.50: 0.40251797437667847	Valid_Recall@0.50: 0.9451782703399658	Valid_mAP@0.50: 0.8790051937103271	Valid_F1@0.50: 0.5336695909500122	Inference_Time: 6616.0263671875	
+
+Epoch 103 (104/150)  - LR/Param_group_0: 0.00030104757354407723	LR/Param_group_1: 0.00030104757354407723	
+
+Epoch 104 (105/150)  - Train_PPYoloELoss/loss_cls: 0.521538257598877	Train_PPYoloELoss/loss_iou: 0.0831405520439148	Train_PPYoloELoss/loss_dfl: 0.6783367395401001	Train_PPYoloELoss/loss: 1.0685573816299438	Valid_PPYoloELoss/loss_cls: 0.5710985660552979	Valid_PPYoloELoss/loss_iou: 0.10361868888139725	Valid_PPYoloELoss/loss_dfl: 0.7600082159042358	Valid_PPYoloELoss/loss: 1.2101491689682007	Valid_Precision@0.50:0.95: 0.3470267057418823	Valid_Recall@0.50:0.95: 0.7691365480422974	Valid_mAP@0.50:0.95: 0.6982443928718567	Valid_F1@0.50:0.95: 0.455569863319397	Valid_Precision@0.50: 0.4041656255722046	Valid_Recall@0.50: 0.9469233751296997	Valid_mAP@0.50: 0.8803632259368896	Valid_F1@0.50: 0.5365172028541565	Inference_Time: 6623.52197265625	
+
+Epoch 104 (105/150)  - LR/Param_group_0: 0.0002932507174393128	LR/Param_group_1: 0.0002932507174393128	
+
+Epoch 105 (106/150)  - Train_PPYoloELoss/loss_cls: 0.5213582515716553	Train_PPYoloELoss/loss_iou: 0.0828346312046051	Train_PPYoloELoss/loss_dfl: 0.6751407384872437	Train_PPYoloELoss/loss: 1.0660144090652466	Valid_PPYoloELoss/loss_cls: 0.5711381435394287	Valid_PPYoloELoss/loss_iou: 0.10392048954963684	Valid_PPYoloELoss/loss_dfl: 0.761031985282898	Valid_PPYoloELoss/loss: 1.2114555835723877	Valid_Precision@0.50:0.95: 0.34823769330978394	Valid_Recall@0.50:0.95: 0.7705920338630676	Valid_mAP@0.50:0.95: 0.6998069286346436	Valid_F1@0.50:0.95: 0.45767414569854736	Valid_Precision@0.50: 0.40568605065345764	Valid_Recall@0.50: 0.9482604265213013	Valid_mAP@0.50: 0.8813482522964478	Valid_F1@0.50: 0.5391232967376709	Inference_Time: 6614.513671875	
+
+Epoch 105 (106/150)  - LR/Param_group_0: 0.00028556650640274207	LR/Param_group_1: 0.00028556650640274207	
+
+Epoch 106 (107/150)  - Train_PPYoloELoss/loss_cls: 0.5199674367904663	Train_PPYoloELoss/loss_iou: 0.08244418352842331	Train_PPYoloELoss/loss_dfl: 0.6750227212905884	Train_PPYoloELoss/loss: 1.063589334487915	Valid_PPYoloELoss/loss_cls: 0.5707927942276001	Valid_PPYoloELoss/loss_iou: 0.1038404256105423	Valid_PPYoloELoss/loss_dfl: 0.7607782483100891	Valid_PPYoloELoss/loss: 1.2107831239700317	Valid_Precision@0.50:0.95: 0.34517791867256165	Valid_Recall@0.50:0.95: 0.7688858509063721	Valid_mAP@0.50:0.95: 0.6993251442909241	Valid_F1@0.50:0.95: 0.4553788900375366	Valid_Precision@0.50: 0.4024765193462372	Valid_Recall@0.50: 0.945243775844574	Valid_mAP@0.50: 0.8809159398078918	Valid_F1@0.50: 0.5367870330810547	Inference_Time: 6556.1435546875	
+
+Epoch 106 (107/150)  - LR/Param_group_0: 0.00027799831177183334	LR/Param_group_1: 0.00027799831177183334	
+
+Epoch 107 (108/150)  - Train_PPYoloELoss/loss_cls: 0.5224065184593201	Train_PPYoloELoss/loss_iou: 0.08272618055343628	Train_PPYoloELoss/loss_dfl: 0.679751992225647	Train_PPYoloELoss/loss: 1.0690977573394775	Valid_PPYoloELoss/loss_cls: 0.5684510469436646	Valid_PPYoloELoss/loss_iou: 0.1037590503692627	Valid_PPYoloELoss/loss_dfl: 0.7601574063301086	Valid_PPYoloELoss/loss: 1.2079272270202637	Valid_Precision@0.50:0.95: 0.34607356786727905	Valid_Recall@0.50:0.95: 0.7692104578018188	Valid_mAP@0.50:0.95: 0.7000319361686707	Valid_F1@0.50:0.95: 0.45607680082321167	Valid_Precision@0.50: 0.40280407667160034	Valid_Recall@0.50: 0.9442380666732788	Valid_mAP@0.50: 0.8811331987380981	Valid_F1@0.50: 0.5366461277008057	Inference_Time: 6605.8837890625	
+
+Epoch 107 (108/150)  - LR/Param_group_0: 0.00027054945398351937	LR/Param_group_1: 0.00027054945398351937	
+
+Epoch 108 (109/150)  - Train_PPYoloELoss/loss_cls: 0.5152336955070496	Train_PPYoloELoss/loss_iou: 0.08235765248537064	Train_PPYoloELoss/loss_dfl: 0.6728980541229248	Train_PPYoloELoss/loss: 1.0575764179229736	Valid_PPYoloELoss/loss_cls: 0.5671314597129822	Valid_PPYoloELoss/loss_iou: 0.10367120057344437	Valid_PPYoloELoss/loss_dfl: 0.7601913213729858	Valid_PPYoloELoss/loss: 1.2064054012298584	Valid_Precision@0.50:0.95: 0.34612858295440674	Valid_Recall@0.50:0.95: 0.7689935564994812	Valid_mAP@0.50:0.95: 0.7000465989112854	Valid_F1@0.50:0.95: 0.45630013942718506	Valid_Precision@0.50: 0.40311387181282043	Valid_Recall@0.50: 0.9446925520896912	Valid_mAP@0.50: 0.8819528222084045	Valid_F1@0.50: 0.5372976660728455	Inference_Time: 6614.2900390625	
+
+Epoch 108 (109/150)  - LR/Param_group_0: 0.00026322320111740364	LR/Param_group_1: 0.00026322320111740364	
+
+Epoch 109 (110/150)  - Train_PPYoloELoss/loss_cls: 0.5196008682250977	Train_PPYoloELoss/loss_iou: 0.08236833661794662	Train_PPYoloELoss/loss_dfl: 0.6742048263549805	Train_PPYoloELoss/loss: 1.0626237392425537	Valid_PPYoloELoss/loss_cls: 0.5646981000900269	Valid_PPYoloELoss/loss_iou: 0.10339435935020447	Valid_PPYoloELoss/loss_dfl: 0.7587331533432007	Valid_PPYoloELoss/loss: 1.2025502920150757	Valid_Precision@0.50:0.95: 0.34730270504951477	Valid_Recall@0.50:0.95: 0.7697182297706604	Valid_mAP@0.50:0.95: 0.7014321088790894	Valid_F1@0.50:0.95: 0.4575250446796417	Valid_Precision@0.50: 0.403921902179718	Valid_Recall@0.50: 0.9430357217788696	Valid_mAP@0.50: 0.8829329013824463	Valid_F1@0.50: 0.5379109978675842	Inference_Time: 6639.9365234375	
+
+Epoch 109 (110/150)  - LR/Param_group_0: 0.00025602276746193706	LR/Param_group_1: 0.00025602276746193706	
+
+Epoch 110 (111/150)  - Train_PPYoloELoss/loss_cls: 0.5245843529701233	Train_PPYoloELoss/loss_iou: 0.08335712552070618	Train_PPYoloELoss/loss_dfl: 0.6811184287071228	Train_PPYoloELoss/loss: 1.0735372304916382	Valid_PPYoloELoss/loss_cls: 0.564278781414032	Valid_PPYoloELoss/loss_iou: 0.10352060943841934	Valid_PPYoloELoss/loss_dfl: 0.7588444948196411	Valid_PPYoloELoss/loss: 1.202502727508545	Valid_Precision@0.50:0.95: 0.350017786026001	Valid_Recall@0.50:0.95: 0.7674015760421753	Valid_mAP@0.50:0.95: 0.7011667490005493	Valid_F1@0.50:0.95: 0.45958206057548523	Valid_Precision@0.50: 0.40824586153030396	Valid_Recall@0.50: 0.9445962309837341	Valid_mAP@0.50: 0.8833029270172119	Valid_F1@0.50: 0.5421028733253479	Inference_Time: 6585.3154296875	
+
+Epoch 110 (111/150)  - LR/Param_group_0: 0.00024895131210419494	LR/Param_group_1: 0.00024895131210419494	
+
+Epoch 111 (112/150)  - Train_PPYoloELoss/loss_cls: 0.518545389175415	Train_PPYoloELoss/loss_iou: 0.08196166157722473	Train_PPYoloELoss/loss_dfl: 0.6745360493659973	Train_PPYoloELoss/loss: 1.0607181787490845	Valid_PPYoloELoss/loss_cls: 0.5617741346359253	Valid_PPYoloELoss/loss_iou: 0.10338854044675827	Valid_PPYoloELoss/loss_dfl: 0.7578418254852295	Valid_PPYoloELoss/loss: 1.1991665363311768	Valid_Precision@0.50:0.95: 0.3531670570373535	Valid_Recall@0.50:0.95: 0.7689231634140015	Valid_mAP@0.50:0.95: 0.7011961936950684	Valid_F1@0.50:0.95: 0.4623080790042877	Valid_Precision@0.50: 0.4118482768535614	Valid_Recall@0.50: 0.9444844126701355	Valid_mAP@0.50: 0.8846489787101746	Valid_F1@0.50: 0.5450937747955322	Inference_Time: 6631.7490234375	
+
+Epoch 111 (112/150)  - LR/Param_group_0: 0.00024201193754387292	LR/Param_group_1: 0.00024201193754387292	
+
+Epoch 112 (113/150)  - Train_PPYoloELoss/loss_cls: 0.5183100700378418	Train_PPYoloELoss/loss_iou: 0.08259256184101105	Train_PPYoloELoss/loss_dfl: 0.6732021570205688	Train_PPYoloELoss/loss: 1.061392903327942	Valid_PPYoloELoss/loss_cls: 0.561758279800415	Valid_PPYoloELoss/loss_iou: 0.10345060378313065	Valid_PPYoloELoss/loss_dfl: 0.7585000991821289	Valid_PPYoloELoss/loss: 1.1996347904205322	Valid_Precision@0.50:0.95: 0.3578876554965973	Valid_Recall@0.50:0.95: 0.7668324708938599	Valid_mAP@0.50:0.95: 0.7005833983421326	Valid_F1@0.50:0.95: 0.46569889783859253	Valid_Precision@0.50: 0.4173428416252136	Valid_Recall@0.50: 0.9444844126701355	Valid_mAP@0.50: 0.8844837546348572	Valid_F1@0.50: 0.5492006540298462	Inference_Time: 6627.13427734375	
+
+Epoch 112 (113/150)  - LR/Param_group_0: 0.0002352076883321097	LR/Param_group_1: 0.0002352076883321097	
+
+Epoch 113 (114/150)  - Train_PPYoloELoss/loss_cls: 0.514323353767395	Train_PPYoloELoss/loss_iou: 0.0814187303185463	Train_PPYoloELoss/loss_dfl: 0.6729751825332642	Train_PPYoloELoss/loss: 1.0543580055236816	Valid_PPYoloELoss/loss_cls: 0.5618558526039124	Valid_PPYoloELoss/loss_iou: 0.10353119671344757	Valid_PPYoloELoss/loss_dfl: 0.7597886323928833	Valid_PPYoloELoss/loss: 1.200578212738037	Valid_Precision@0.50:0.95: 0.35902833938598633	Valid_Recall@0.50:0.95: 0.7665584683418274	Valid_mAP@0.50:0.95: 0.7008762955665588	Valid_F1@0.50:0.95: 0.46662020683288574	Valid_Precision@0.50: 0.4181656241416931	Valid_Recall@0.50: 0.9418857097625732	Valid_mAP@0.50: 0.8849806189537048	Valid_F1@0.50: 0.5497240424156189	Inference_Time: 6634.12841796875	
+
+Epoch 113 (114/150)  - LR/Param_group_0: 0.00022854154973573373	LR/Param_group_1: 0.00022854154973573373	
+
+Epoch 114 (115/150)  - Train_PPYoloELoss/loss_cls: 0.5150407552719116	Train_PPYoloELoss/loss_iou: 0.0811070054769516	Train_PPYoloELoss/loss_dfl: 0.6714211702346802	Train_PPYoloELoss/loss: 1.0535194873809814	Valid_PPYoloELoss/loss_cls: 0.5637747049331665	Valid_PPYoloELoss/loss_iou: 0.10382120311260223	Valid_PPYoloELoss/loss_dfl: 0.7606285214424133	Valid_PPYoloELoss/loss: 1.2036417722702026	Valid_Precision@0.50:0.95: 0.3628511428833008	Valid_Recall@0.50:0.95: 0.7673006057739258	Valid_mAP@0.50:0.95: 0.7007184624671936	Valid_F1@0.50:0.95: 0.46960651874542236	Valid_Precision@0.50: 0.42233261466026306	Valid_Recall@0.50: 0.9429394602775574	Valid_mAP@0.50: 0.8840435743331909	Valid_F1@0.50: 0.5529814958572388	Inference_Time: 6626.85546875	
+
+Epoch 114 (115/150)  - LR/Param_group_0: 0.00022201644642752031	LR/Param_group_1: 0.00022201644642752031	
+
+Epoch 115 (116/150)  - Train_PPYoloELoss/loss_cls: 0.5132454037666321	Train_PPYoloELoss/loss_iou: 0.08120100200176239	Train_PPYoloELoss/loss_dfl: 0.6716502904891968	Train_PPYoloELoss/loss: 1.0520731210708618	Valid_PPYoloELoss/loss_cls: 0.5640736818313599	Valid_PPYoloELoss/loss_iou: 0.10432059317827225	Valid_PPYoloELoss/loss_dfl: 0.7630085945129395	Valid_PPYoloELoss/loss: 1.2063795328140259	Valid_Precision@0.50:0.95: 0.36234569549560547	Valid_Recall@0.50:0.95: 0.7674276828765869	Valid_mAP@0.50:0.95: 0.7005103230476379	Valid_F1@0.50:0.95: 0.4691942632198334	Valid_Precision@0.50: 0.4220733642578125	Valid_Recall@0.50: 0.9434964656829834	Valid_mAP@0.50: 0.8845255970954895	Valid_F1@0.50: 0.5528431534767151	Inference_Time: 6591.98828125	
+
+Epoch 115 (116/150)  - LR/Param_group_0: 0.00021563524120303326	LR/Param_group_1: 0.00021563524120303326	
+
+Epoch 116 (117/150)  - Train_PPYoloELoss/loss_cls: 0.5137490034103394	Train_PPYoloELoss/loss_iou: 0.08092913031578064	Train_PPYoloELoss/loss_dfl: 0.6696502566337585	Train_PPYoloELoss/loss: 1.0508968830108643	Valid_PPYoloELoss/loss_cls: 0.5659162402153015	Valid_PPYoloELoss/loss_iou: 0.10455647110939026	Valid_PPYoloELoss/loss_dfl: 0.7636063694953918	Valid_PPYoloELoss/loss: 1.2091103792190552	Valid_Precision@0.50:0.95: 0.36358529329299927	Valid_Recall@0.50:0.95: 0.7685348987579346	Valid_mAP@0.50:0.95: 0.7016353011131287	Valid_F1@0.50:0.95: 0.47071680426597595	Valid_Precision@0.50: 0.42349687218666077	Valid_Recall@0.50: 0.9432961344718933	Valid_mAP@0.50: 0.885105550289154	Valid_F1@0.50: 0.5545224547386169	Inference_Time: 6678.49755859375	
+
+Epoch 116 (117/150)  - LR/Param_group_0: 0.00020940073372461437	LR/Param_group_1: 0.00020940073372461437	
+
+Epoch 117 (118/150)  - Train_PPYoloELoss/loss_cls: 0.5130312442779541	Train_PPYoloELoss/loss_iou: 0.08099374175071716	Train_PPYoloELoss/loss_dfl: 0.6729128360748291	Train_PPYoloELoss/loss: 1.0519719123840332	Valid_PPYoloELoss/loss_cls: 0.5660192370414734	Valid_PPYoloELoss/loss_iou: 0.10499963909387589	Valid_PPYoloELoss/loss_dfl: 0.7650018334388733	Valid_PPYoloELoss/loss: 1.2110193967819214	Valid_Precision@0.50:0.95: 0.3627921938896179	Valid_Recall@0.50:0.95: 0.7665765881538391	Valid_mAP@0.50:0.95: 0.7005361914634705	Valid_F1@0.50:0.95: 0.4699847102165222	Valid_Precision@0.50: 0.42296430468559265	Valid_Recall@0.50: 0.9427680969238281	Valid_mAP@0.50: 0.8843564391136169	Valid_F1@0.50: 0.5543330311775208	Inference_Time: 6607.10693359375	
+
+Epoch 117 (118/150)  - LR/Param_group_0: 0.0002033156592930716	LR/Param_group_1: 0.0002033156592930716	
+
+Epoch 118 (119/150)  - Train_PPYoloELoss/loss_cls: 0.5117753744125366	Train_PPYoloELoss/loss_iou: 0.08089649677276611	Train_PPYoloELoss/loss_dfl: 0.6715905070304871	Train_PPYoloELoss/loss: 1.0498123168945312	Valid_PPYoloELoss/loss_cls: 0.5661635994911194	Valid_PPYoloELoss/loss_iou: 0.10504120588302612	Valid_PPYoloELoss/loss_dfl: 0.7652463316917419	Valid_PPYoloELoss/loss: 1.2113901376724243	Valid_Precision@0.50:0.95: 0.36214479804039	Valid_Recall@0.50:0.95: 0.7676379084587097	Valid_mAP@0.50:0.95: 0.6987959146499634	Valid_F1@0.50:0.95: 0.4699332118034363	Valid_Precision@0.50: 0.4219786524772644	Valid_Recall@0.50: 0.9453668594360352	Valid_mAP@0.50: 0.8843497633934021	Valid_F1@0.50: 0.5542327165603638	Inference_Time: 6623.4951171875	
+
+Epoch 118 (119/150)  - LR/Param_group_0: 0.00019738268764760549	LR/Param_group_1: 0.00019738268764760549	
+
+Epoch 119 (120/150)  - Train_PPYoloELoss/loss_cls: 0.5091502070426941	Train_PPYoloELoss/loss_iou: 0.08036407828330994	Train_PPYoloELoss/loss_dfl: 0.6680823564529419	Train_PPYoloELoss/loss: 1.044101595878601	Valid_PPYoloELoss/loss_cls: 0.5644879341125488	Valid_PPYoloELoss/loss_iou: 0.104897141456604	Valid_PPYoloELoss/loss_dfl: 0.7638397216796875	Valid_PPYoloELoss/loss: 1.2086504697799683	Valid_Precision@0.50:0.95: 0.35818952322006226	Valid_Recall@0.50:0.95: 0.7675647735595703	Valid_mAP@0.50:0.95: 0.6990677714347839	Valid_F1@0.50:0.95: 0.4670688807964325	Valid_Precision@0.50: 0.4169912338256836	Valid_Recall@0.50: 0.9425138831138611	Valid_mAP@0.50: 0.8824676275253296	Valid_F1@0.50: 0.5501358509063721	Inference_Time: 6605.93212890625	
+
+Epoch 119 (120/150)  - LR/Param_group_0: 0.0001916044217944987	LR/Param_group_1: 0.0001916044217944987	
+
+Epoch 120 (121/150)  - Train_PPYoloELoss/loss_cls: 0.5136569738388062	Train_PPYoloELoss/loss_iou: 0.08234991878271103	Train_PPYoloELoss/loss_dfl: 0.6716141104698181	Train_PPYoloELoss/loss: 1.0553392171859741	Valid_PPYoloELoss/loss_cls: 0.5642995834350586	Valid_PPYoloELoss/loss_iou: 0.10484309494495392	Valid_PPYoloELoss/loss_dfl: 0.7629930973052979	Valid_PPYoloELoss/loss: 1.2079038619995117	Valid_Precision@0.50:0.95: 0.36248844861984253	Valid_Recall@0.50:0.95: 0.7669931054115295	Valid_mAP@0.50:0.95: 0.6983628273010254	Valid_F1@0.50:0.95: 0.4706667959690094	Valid_Precision@0.50: 0.42251208424568176	Valid_Recall@0.50: 0.9444751143455505	Valid_mAP@0.50: 0.8846908807754517	Valid_F1@0.50: 0.5553499460220337	Inference_Time: 6602.7119140625	
+
+Epoch 120 (121/150)  - LR/Param_group_0: 0.00018598339686508444	LR/Param_group_1: 0.00018598339686508444	
+
+Epoch 121 (122/150)  - Train_PPYoloELoss/loss_cls: 0.511233389377594	Train_PPYoloELoss/loss_iou: 0.07991894334554672	Train_PPYoloELoss/loss_dfl: 0.6689795255661011	Train_PPYoloELoss/loss: 1.0455206632614136	Valid_PPYoloELoss/loss_cls: 0.5640730857849121	Valid_PPYoloELoss/loss_iou: 0.1048537865281105	Valid_PPYoloELoss/loss_dfl: 0.7629213929176331	Valid_PPYoloELoss/loss: 1.207668662071228	Valid_Precision@0.50:0.95: 0.3660057485103607	Valid_Recall@0.50:0.95: 0.7661142349243164	Valid_mAP@0.50:0.95: 0.6992043256759644	Valid_F1@0.50:0.95: 0.47391295433044434	Valid_Precision@0.50: 0.4267326593399048	Valid_Recall@0.50: 0.9429897665977478	Valid_mAP@0.50: 0.8838288187980652	Valid_F1@0.50: 0.5594007968902588	Inference_Time: 6640.70849609375	
+
+Epoch 121 (122/150)  - LR/Param_group_0: 0.0001805220790034949	LR/Param_group_1: 0.0001805220790034949	
+
+Epoch 122 (123/150)  - Train_PPYoloELoss/loss_cls: 0.520884096622467	Train_PPYoloELoss/loss_iou: 0.08059569448232651	Train_PPYoloELoss/loss_dfl: 0.6708624958992004	Train_PPYoloELoss/loss: 1.0578044652938843	Valid_PPYoloELoss/loss_cls: 0.5635930895805359	Valid_PPYoloELoss/loss_iou: 0.10486014932394028	Valid_PPYoloELoss/loss_dfl: 0.7633865475654602	Valid_PPYoloELoss/loss: 1.2074365615844727	Valid_Precision@0.50:0.95: 0.36881986260414124	Valid_Recall@0.50:0.95: 0.7645092010498047	Valid_mAP@0.50:0.95: 0.6995348334312439	Valid_F1@0.50:0.95: 0.4758520722389221	Valid_Precision@0.50: 0.42960625886917114	Valid_Recall@0.50: 0.9400021433830261	Valid_mAP@0.50: 0.8837953209877014	Valid_F1@0.50: 0.5610668659210205	Inference_Time: 6575.5546875	
+
+Epoch 122 (123/150)  - LR/Param_group_0: 0.00017522286428467402	LR/Param_group_1: 0.00017522286428467402	
+
+Epoch 123 (124/150)  - Train_PPYoloELoss/loss_cls: 0.5101562142372131	Train_PPYoloELoss/loss_iou: 0.07966957986354828	Train_PPYoloELoss/loss_dfl: 0.6698945760726929	Train_PPYoloELoss/loss: 1.0442770719528198	Valid_PPYoloELoss/loss_cls: 0.5644861459732056	Valid_PPYoloELoss/loss_iou: 0.10497145354747772	Valid_PPYoloELoss/loss_dfl: 0.7641448974609375	Valid_PPYoloELoss/loss: 1.2089871168136597	Valid_Precision@0.50:0.95: 0.3681980073451996	Valid_Recall@0.50:0.95: 0.7651963829994202	Valid_mAP@0.50:0.95: 0.6988310813903809	Valid_F1@0.50:0.95: 0.475689172744751	Valid_Precision@0.50: 0.42975375056266785	Valid_Recall@0.50: 0.9441371560096741	Valid_mAP@0.50: 0.8835703730583191	Valid_F1@0.50: 0.5622243881225586	Inference_Time: 6572.7626953125	
+
+Epoch 123 (124/150)  - LR/Param_group_0: 0.00017008807766313573	LR/Param_group_1: 0.00017008807766313573	
+
+Epoch 124 (125/150)  - Train_PPYoloELoss/loss_cls: 0.5064722299575806	Train_PPYoloELoss/loss_iou: 0.07945526391267776	Train_PPYoloELoss/loss_dfl: 0.6654665470123291	Train_PPYoloELoss/loss: 1.037843108177185	Valid_PPYoloELoss/loss_cls: 0.5624775886535645	Valid_PPYoloELoss/loss_iou: 0.10494548827409744	Valid_PPYoloELoss/loss_dfl: 0.7645106315612793	Valid_PPYoloELoss/loss: 1.2070965766906738	Valid_Precision@0.50:0.95: 0.37049803137779236	Valid_Recall@0.50:0.95: 0.7648079991340637	Valid_mAP@0.50:0.95: 0.6990262269973755	Valid_F1@0.50:0.95: 0.47774672508239746	Valid_Precision@0.50: 0.4317893385887146	Valid_Recall@0.50: 0.9415751099586487	Valid_mAP@0.50: 0.8835553526878357	Valid_F1@0.50: 0.5637068152427673	Inference_Time: 6559.517578125	
+
+Epoch 124 (125/150)  - LR/Param_group_0: 0.0001651199719529223	LR/Param_group_1: 0.0001651199719529223	
+
+Epoch 125 (126/150)  - Train_PPYoloELoss/loss_cls: 0.5069534182548523	Train_PPYoloELoss/loss_iou: 0.0797816812992096	Train_PPYoloELoss/loss_dfl: 0.6688509583473206	Train_PPYoloELoss/loss: 1.0408328771591187	Valid_PPYoloELoss/loss_cls: 0.5623089075088501	Valid_PPYoloELoss/loss_iou: 0.10492295026779175	Valid_PPYoloELoss/loss_dfl: 0.7650178074836731	Valid_PPYoloELoss/loss: 1.2071253061294556	Valid_Precision@0.50:0.95: 0.3715803921222687	Valid_Recall@0.50:0.95: 0.7645156979560852	Valid_mAP@0.50:0.95: 0.6982971429824829	Valid_F1@0.50:0.95: 0.47795894742012024	Valid_Precision@0.50: 0.4323442876338959	Valid_Recall@0.50: 0.9381904006004333	Valid_mAP@0.50: 0.8838303685188293	Valid_F1@0.50: 0.5628171563148499	Inference_Time: 6548.33056640625	
+
+Epoch 125 (126/150)  - LR/Param_group_0: 0.00016032072683921532	LR/Param_group_1: 0.00016032072683921532	
+
+Epoch 126 (127/150)  - Train_PPYoloELoss/loss_cls: 0.5058449506759644	Train_PPYoloELoss/loss_iou: 0.07947617024183273	Train_PPYoloELoss/loss_dfl: 0.6696667671203613	Train_PPYoloELoss/loss: 1.0393692255020142	Valid_PPYoloELoss/loss_cls: 0.5625582337379456	Valid_PPYoloELoss/loss_iou: 0.10488555580377579	Valid_PPYoloELoss/loss_dfl: 0.7650642991065979	Valid_PPYoloELoss/loss: 1.2073041200637817	Valid_Precision@0.50:0.95: 0.3695389926433563	Valid_Recall@0.50:0.95: 0.7648041248321533	Valid_mAP@0.50:0.95: 0.6990301609039307	Valid_F1@0.50:0.95: 0.4762841463088989	Valid_Precision@0.50: 0.4294079542160034	Valid_Recall@0.50: 0.9381904006004333	Valid_mAP@0.50: 0.8818692564964294	Valid_F1@0.50: 0.5602292418479919	Inference_Time: 6552.1865234375	
+
+Epoch 126 (127/150)  - LR/Param_group_0: 0.0001556924479220294	LR/Param_group_1: 0.0001556924479220294	
+
+Epoch 127 (128/150)  - Train_PPYoloELoss/loss_cls: 0.504645824432373	Train_PPYoloELoss/loss_iou: 0.07871190458536148	Train_PPYoloELoss/loss_dfl: 0.6642862558364868	Train_PPYoloELoss/loss: 1.033569097518921	Valid_PPYoloELoss/loss_cls: 0.5613394379615784	Valid_PPYoloELoss/loss_iou: 0.10488426685333252	Valid_PPYoloELoss/loss_dfl: 0.7642192244529724	Valid_PPYoloELoss/loss: 1.2056593894958496	Valid_Precision@0.50:0.95: 0.36908257007598877	Valid_Recall@0.50:0.95: 0.7649416327476501	Valid_mAP@0.50:0.95: 0.6999615430831909	Valid_F1@0.50:0.95: 0.4761619567871094	Valid_Precision@0.50: 0.4283490478992462	Valid_Recall@0.50: 0.93611741065979	Valid_mAP@0.50: 0.8836584091186523	Valid_F1@0.50: 0.559253454208374	Inference_Time: 6590.8369140625	
+
+Epoch 127 (128/150)  - LR/Param_group_0: 0.00015123716579241035	LR/Param_group_1: 0.00015123716579241035	
+
+Epoch 128 (129/150)  - Train_PPYoloELoss/loss_cls: 0.5074091553688049	Train_PPYoloELoss/loss_iou: 0.07885880768299103	Train_PPYoloELoss/loss_dfl: 0.6667186617851257	Train_PPYoloELoss/loss: 1.0379148721694946	Valid_PPYoloELoss/loss_cls: 0.5598776936531067	Valid_PPYoloELoss/loss_iou: 0.10481137037277222	Valid_PPYoloELoss/loss_dfl: 0.7645123600959778	Valid_PPYoloELoss/loss: 1.2041622400283813	Valid_Precision@0.50:0.95: 0.37123197317123413	Valid_Recall@0.50:0.95: 0.7660924792289734	Valid_mAP@0.50:0.95: 0.7011655569076538	Valid_F1@0.50:0.95: 0.4783504605293274	Valid_Precision@0.50: 0.43081802129745483	Valid_Recall@0.50: 0.9365718364715576	Valid_mAP@0.50: 0.884701669216156	Valid_F1@0.50: 0.5617427229881287	Inference_Time: 6581.95654296875	
+
+Epoch 128 (129/150)  - LR/Param_group_0: 0.000146956835141543	LR/Param_group_1: 0.000146956835141543	
+
+Epoch 129 (130/150)  - Train_PPYoloELoss/loss_cls: 0.5043742060661316	Train_PPYoloELoss/loss_iou: 0.07956888526678085	Train_PPYoloELoss/loss_dfl: 0.6672067642211914	Train_PPYoloELoss/loss: 1.036899447441101	Valid_PPYoloELoss/loss_cls: 0.5602432489395142	Valid_PPYoloELoss/loss_iou: 0.10458432137966156	Valid_PPYoloELoss/loss_dfl: 0.7640981078147888	Valid_PPYoloELoss/loss: 1.2037532329559326	Valid_Precision@0.50:0.95: 0.37013155221939087	Valid_Recall@0.50:0.95: 0.7654013633728027	Valid_mAP@0.50:0.95: 0.7015703320503235	Valid_F1@0.50:0.95: 0.47822627425193787	Valid_Precision@0.50: 0.4304446876049042	Valid_Recall@0.50: 0.9373118281364441	Valid_mAP@0.50: 0.8858301639556885	Valid_F1@0.50: 0.5627812743186951	Inference_Time: 6562.6513671875	
+
+Epoch 129 (130/150)  - LR/Param_group_0: 0.00014285333390315818	LR/Param_group_1: 0.00014285333390315818	
+
+Epoch 130 (131/150)  - Train_PPYoloELoss/loss_cls: 0.5035442113876343	Train_PPYoloELoss/loss_iou: 0.0783970057964325	Train_PPYoloELoss/loss_dfl: 0.6635593175888062	Train_PPYoloELoss/loss: 1.0313165187835693	Valid_PPYoloELoss/loss_cls: 0.5608039498329163	Valid_PPYoloELoss/loss_iou: 0.1044975221157074	Valid_PPYoloELoss/loss_dfl: 0.7630883455276489	Valid_PPYoloELoss/loss: 1.2035918235778809	Valid_Precision@0.50:0.95: 0.36895275115966797	Valid_Recall@0.50:0.95: 0.7651461362838745	Valid_mAP@0.50:0.95: 0.7020577788352966	Valid_F1@0.50:0.95: 0.4775477945804596	Valid_Precision@0.50: 0.4301811754703522	Valid_Recall@0.50: 0.9386855363845825	Valid_mAP@0.50: 0.8861777782440186	Valid_F1@0.50: 0.5633411407470703	Inference_Time: 6573.75927734375	
+
+Epoch 130 (131/150)  - LR/Param_group_0: 0.00013892846242961605	LR/Param_group_1: 0.00013892846242961605	
+
+Epoch 131 (132/150)  - Train_PPYoloELoss/loss_cls: 0.4968055784702301	Train_PPYoloELoss/loss_iou: 0.0773848295211792	Train_PPYoloELoss/loss_dfl: 0.6599545478820801	Train_PPYoloELoss/loss: 1.0202445983886719	Valid_PPYoloELoss/loss_cls: 0.5619959235191345	Valid_PPYoloELoss/loss_iou: 0.10454598814249039	Valid_PPYoloELoss/loss_dfl: 0.7625362873077393	Valid_PPYoloELoss/loss: 1.2046289443969727	Valid_Precision@0.50:0.95: 0.3735397756099701	Valid_Recall@0.50:0.95: 0.7644931077957153	Valid_mAP@0.50:0.95: 0.7012225985527039	Valid_F1@0.50:0.95: 0.481047660112381	Valid_Precision@0.50: 0.43505537509918213	Valid_Recall@0.50: 0.9375200271606445	Valid_mAP@0.50: 0.8863660097122192	Valid_F1@0.50: 0.5668967366218567	Inference_Time: 6565.58056640625	
+
+Epoch 131 (132/150)  - LR/Param_group_0: 0.00013518394270202748	LR/Param_group_1: 0.00013518394270202748	
+
+Epoch 132 (133/150)  - Train_PPYoloELoss/loss_cls: 0.49776506423950195	Train_PPYoloELoss/loss_iou: 0.0780399739742279	Train_PPYoloELoss/loss_dfl: 0.6635987162590027	Train_PPYoloELoss/loss: 1.0246644020080566	Valid_PPYoloELoss/loss_cls: 0.5628604292869568	Valid_PPYoloELoss/loss_iou: 0.10457424074411392	Valid_PPYoloELoss/loss_dfl: 0.7630273103713989	Valid_PPYoloELoss/loss: 1.2058093547821045	Valid_Precision@0.50:0.95: 0.37263059616088867	Valid_Recall@0.50:0.95: 0.7641785144805908	Valid_mAP@0.50:0.95: 0.7013148665428162	Valid_F1@0.50:0.95: 0.4799310863018036	Valid_Precision@0.50: 0.43354055285453796	Valid_Recall@0.50: 0.9350557923316956	Valid_mAP@0.50: 0.8844998478889465	Valid_F1@0.50: 0.5647982954978943	Inference_Time: 6588.38916015625	
+
+Epoch 132 (133/150)  - LR/Param_group_0: 0.00013162141757475915	LR/Param_group_1: 0.00013162141757475915	
+
+Epoch 133 (134/150)  - Train_PPYoloELoss/loss_cls: 0.5034685134887695	Train_PPYoloELoss/loss_iou: 0.07862672954797745	Train_PPYoloELoss/loss_dfl: 0.6665645241737366	Train_PPYoloELoss/loss: 1.033318042755127	Valid_PPYoloELoss/loss_cls: 0.5618792772293091	Valid_PPYoloELoss/loss_iou: 0.10433025658130646	Valid_PPYoloELoss/loss_dfl: 0.762551486492157	Valid_PPYoloELoss/loss: 1.203980565071106	Valid_Precision@0.50:0.95: 0.37512579560279846	Valid_Recall@0.50:0.95: 0.7654403448104858	Valid_mAP@0.50:0.95: 0.7015457153320312	Valid_F1@0.50:0.95: 0.4821593165397644	Valid_Precision@0.50: 0.4369015395641327	Valid_Recall@0.50: 0.9394460916519165	Valid_mAP@0.50: 0.8839725255966187	Valid_F1@0.50: 0.5684290528297424	Inference_Time: 6602.0419921875	
+
+Epoch 133 (134/150)  - LR/Param_group_0: 0.0001282424500546556	LR/Param_group_1: 0.0001282424500546556	
+
+Epoch 134 (135/150)  - Train_PPYoloELoss/loss_cls: 0.5016084313392639	Train_PPYoloELoss/loss_iou: 0.0785011276602745	Train_PPYoloELoss/loss_dfl: 0.6650028824806213	Train_PPYoloELoss/loss: 1.0303627252578735	Valid_PPYoloELoss/loss_cls: 0.5607944130897522	Valid_PPYoloELoss/loss_iou: 0.10436272621154785	Valid_PPYoloELoss/loss_dfl: 0.7629903554916382	Valid_PPYoloELoss/loss: 1.2031965255737305	Valid_Precision@0.50:0.95: 0.37505024671554565	Valid_Recall@0.50:0.95: 0.7642722129821777	Valid_mAP@0.50:0.95: 0.7013838291168213	Valid_F1@0.50:0.95: 0.48119214177131653	Valid_Precision@0.50: 0.43648338317871094	Valid_Recall@0.50: 0.9382805228233337	Valid_mAP@0.50: 0.8834604620933533	Valid_F1@0.50: 0.5669079422950745	Inference_Time: 6580.728515625	
+
+Epoch 134 (135/150)  - LR/Param_group_0: 0.00012504852261529148	LR/Param_group_1: 0.00012504852261529148	
+
+Epoch 135 (136/150)  - Train_PPYoloELoss/loss_cls: 0.49955058097839355	Train_PPYoloELoss/loss_iou: 0.07861053943634033	Train_PPYoloELoss/loss_dfl: 0.6657513380050659	Train_PPYoloELoss/loss: 1.0289521217346191	Valid_PPYoloELoss/loss_cls: 0.5605936050415039	Valid_PPYoloELoss/loss_iou: 0.10436675697565079	Valid_PPYoloELoss/loss_dfl: 0.7638913989067078	Valid_PPYoloELoss/loss: 1.2034564018249512	Valid_Precision@0.50:0.95: 0.37714308500289917	Valid_Recall@0.50:0.95: 0.7640389204025269	Valid_mAP@0.50:0.95: 0.7012974619865417	Valid_F1@0.50:0.95: 0.4828551411628723	Valid_Precision@0.50: 0.4383437931537628	Valid_Recall@0.50: 0.9342101216316223	Valid_mAP@0.50: 0.8816350102424622	Valid_F1@0.50: 0.5678322315216064	Inference_Time: 6573.25341796875	
+
+Epoch 135 (136/150)  - LR/Param_group_0: 0.00012204103654655794	LR/Param_group_1: 0.00012204103654655794	
+
+Epoch 136 (137/150)  - Train_PPYoloELoss/loss_cls: 0.5016946196556091	Train_PPYoloELoss/loss_iou: 0.07842101156711578	Train_PPYoloELoss/loss_dfl: 0.6652393937110901	Train_PPYoloELoss/loss: 1.0303665399551392	Valid_PPYoloELoss/loss_cls: 0.5602635741233826	Valid_PPYoloELoss/loss_iou: 0.10452282428741455	Valid_PPYoloELoss/loss_dfl: 0.7655676603317261	Valid_PPYoloELoss/loss: 1.2043545246124268	Valid_Precision@0.50:0.95: 0.3769350051879883	Valid_Recall@0.50:0.95: 0.7641609907150269	Valid_mAP@0.50:0.95: 0.7001423239707947	Valid_F1@0.50:0.95: 0.4825724959373474	Valid_Precision@0.50: 0.43876850605010986	Valid_Recall@0.50: 0.9382514953613281	Valid_mAP@0.50: 0.8824211359024048	Valid_F1@0.50: 0.5685979127883911	Inference_Time: 6574.38671875	
+
+Epoch 136 (137/150)  - LR/Param_group_0: 0.00011922131133986672	LR/Param_group_1: 0.00011922131133986672	
+
+Epoch 137 (138/150)  - Train_PPYoloELoss/loss_cls: 0.4999864101409912	Train_PPYoloELoss/loss_iou: 0.07826085388660431	Train_PPYoloELoss/loss_dfl: 0.6655895709991455	Train_PPYoloELoss/loss: 1.028433084487915	Valid_PPYoloELoss/loss_cls: 0.5602024793624878	Valid_PPYoloELoss/loss_iou: 0.10458414256572723	Valid_PPYoloELoss/loss_dfl: 0.7658402323722839	Valid_PPYoloELoss/loss: 1.204582691192627	Valid_Precision@0.50:0.95: 0.37888309359550476	Valid_Recall@0.50:0.95: 0.7636304497718811	Valid_mAP@0.50:0.95: 0.7005180716514587	Valid_F1@0.50:0.95: 0.48449990153312683	Valid_Precision@0.50: 0.44119974970817566	Valid_Recall@0.50: 0.9365718364715576	Valid_mAP@0.50: 0.8815379738807678	Valid_F1@0.50: 0.5710235238075256	Inference_Time: 6543.20654296875	
+
+Epoch 137 (138/150)  - LR/Param_group_0: 0.0001165905841092421	LR/Param_group_1: 0.0001165905841092421	
+
+Epoch 138 (139/150)  - Train_PPYoloELoss/loss_cls: 0.5041343569755554	Train_PPYoloELoss/loss_iou: 0.07791713625192642	Train_PPYoloELoss/loss_dfl: 0.6637669801712036	Train_PPYoloELoss/loss: 1.0308103561401367	Valid_PPYoloELoss/loss_cls: 0.560820996761322	Valid_PPYoloELoss/loss_iou: 0.10482265800237656	Valid_PPYoloELoss/loss_dfl: 0.7670410871505737	Valid_PPYoloELoss/loss: 1.206398367881775	Valid_Precision@0.50:0.95: 0.37875059247016907	Valid_Recall@0.50:0.95: 0.7641615867614746	Valid_mAP@0.50:0.95: 0.7003633379936218	Valid_F1@0.50:0.95: 0.4845603108406067	Valid_Precision@0.50: 0.4414459466934204	Valid_Recall@0.50: 0.9367431998252869	Valid_mAP@0.50: 0.8818792700767517	Valid_F1@0.50: 0.5715897679328918	Inference_Time: 6552.70068359375	
+
+Epoch 138 (139/150)  - LR/Param_group_0: 0.00011415000904855509	LR/Param_group_1: 0.00011415000904855509	
+
+Epoch 139 (140/150)  - Train_PPYoloELoss/loss_cls: 0.49881449341773987	Train_PPYoloELoss/loss_iou: 0.0772809162735939	Train_PPYoloELoss/loss_dfl: 0.6637049317359924	Train_PPYoloELoss/loss: 1.0238689184188843	Valid_PPYoloELoss/loss_cls: 0.5615950226783752	Valid_PPYoloELoss/loss_iou: 0.10494332760572433	Valid_PPYoloELoss/loss_dfl: 0.7673582434654236	Valid_PPYoloELoss/loss: 1.207632303237915	Valid_Precision@0.50:0.95: 0.38215702772140503	Valid_Recall@0.50:0.95: 0.7645605802536011	Valid_mAP@0.50:0.95: 0.7003287076950073	Valid_F1@0.50:0.95: 0.4876433312892914	Valid_Precision@0.50: 0.4452018141746521	Valid_Recall@0.50: 0.9367431998252869	Valid_mAP@0.50: 0.882491409778595	Valid_F1@0.50: 0.5750507116317749	Inference_Time: 6542.13671875	
+
+Epoch 139 (140/150)  - LR/Param_group_0: 0.00011190065692513706	LR/Param_group_1: 0.00011190065692513706	
+
+Epoch 140 (141/150)  - Train_PPYoloELoss/loss_cls: 0.4975254237651825	Train_PPYoloELoss/loss_iou: 0.07743310928344727	Train_PPYoloELoss/loss_dfl: 0.6628281474113464	Train_PPYoloELoss/loss: 1.0225229263305664	Valid_PPYoloELoss/loss_cls: 0.5629276633262634	Valid_PPYoloELoss/loss_iou: 0.10519640147686005	Valid_PPYoloELoss/loss_dfl: 0.7684746980667114	Valid_PPYoloELoss/loss: 1.210155963897705	Valid_Precision@0.50:0.95: 0.3817409574985504	Valid_Recall@0.50:0.95: 0.76473069190979	Valid_mAP@0.50:0.95: 0.7012661099433899	Valid_F1@0.50:0.95: 0.4876825511455536	Valid_Precision@0.50: 0.44534337520599365	Valid_Recall@0.50: 0.9392823576927185	Valid_mAP@0.50: 0.8843377232551575	Valid_F1@0.50: 0.5760409832000732	Inference_Time: 6579.5263671875	
+
+Epoch 140 (141/150)  - LR/Param_group_0: 0.00010984351460999626	LR/Param_group_1: 0.00010984351460999626	
+
+Epoch 141 (142/150)  - Train_PPYoloELoss/loss_cls: 0.4991301894187927	Train_PPYoloELoss/loss_iou: 0.07796988636255264	Train_PPYoloELoss/loss_dfl: 0.6605618000030518	Train_PPYoloELoss/loss: 1.0243357419967651	Valid_PPYoloELoss/loss_cls: 0.5641574859619141	Valid_PPYoloELoss/loss_iou: 0.10549873858690262	Valid_PPYoloELoss/loss_dfl: 0.7695643305778503	Valid_PPYoloELoss/loss: 1.2126867771148682	Valid_Precision@0.50:0.95: 0.3804975748062134	Valid_Recall@0.50:0.95: 0.7636041641235352	Valid_mAP@0.50:0.95: 0.7003466486930847	Valid_F1@0.50:0.95: 0.4866088926792145	Valid_Precision@0.50: 0.44383370876312256	Valid_Recall@0.50: 0.9362658262252808	Valid_mAP@0.50: 0.8843308687210083	Valid_F1@0.50: 0.5745636224746704	Inference_Time: 6566.1640625	
+
+Epoch 141 (142/150)  - LR/Param_group_0: 0.00010797948464484203	LR/Param_group_1: 0.00010797948464484203	
+
+Epoch 142 (143/150)  - Train_PPYoloELoss/loss_cls: 0.4998498857021332	Train_PPYoloELoss/loss_iou: 0.07747218012809753	Train_PPYoloELoss/loss_dfl: 0.6629183292388916	Train_PPYoloELoss/loss: 1.0249899625778198	Valid_PPYoloELoss/loss_cls: 0.5639386177062988	Valid_PPYoloELoss/loss_iou: 0.10561227798461914	Valid_PPYoloELoss/loss_dfl: 0.7702416181564331	Valid_PPYoloELoss/loss: 1.2130900621414185	Valid_Precision@0.50:0.95: 0.38097769021987915	Valid_Recall@0.50:0.95: 0.7624378800392151	Valid_mAP@0.50:0.95: 0.700737476348877	Valid_F1@0.50:0.95: 0.48714330792427063	Valid_Precision@0.50: 0.4442601501941681	Valid_Recall@0.50: 0.9352120757102966	Valid_mAP@0.50: 0.8849481344223022	Valid_F1@0.50: 0.5751012563705444	Inference_Time: 6525.88623046875	
+
+Epoch 142 (143/150)  - LR/Param_group_0: 0.0001063093848461079	LR/Param_group_1: 0.0001063093848461079	
+
+Epoch 143 (144/150)  - Train_PPYoloELoss/loss_cls: 0.49587616324424744	Train_PPYoloELoss/loss_iou: 0.07696139812469482	Train_PPYoloELoss/loss_dfl: 0.6588059663772583	Train_PPYoloELoss/loss: 1.0176825523376465	Valid_PPYoloELoss/loss_cls: 0.5625503659248352	Valid_PPYoloELoss/loss_iou: 0.10570235550403595	Valid_PPYoloELoss/loss_dfl: 0.7708784341812134	Valid_PPYoloELoss/loss: 1.2122455835342407	Valid_Precision@0.50:0.95: 0.3803430199623108	Valid_Recall@0.50:0.95: 0.7631065845489502	Valid_mAP@0.50:0.95: 0.7013463377952576	Valid_F1@0.50:0.95: 0.4873812198638916	Valid_Precision@0.50: 0.4441680312156677	Valid_Recall@0.50: 0.9372599124908447	Valid_mAP@0.50: 0.8857543468475342	Valid_F1@0.50: 0.5762339234352112	Inference_Time: 6777.615234375	
+
+Epoch 143 (144/150)  - LR/Param_group_0: 0.00010483394794614587	LR/Param_group_1: 0.00010483394794614587	
+
+Epoch 144 (145/150)  - Train_PPYoloELoss/loss_cls: 0.49771595001220703	Train_PPYoloELoss/loss_iou: 0.07777047157287598	Train_PPYoloELoss/loss_dfl: 0.6595507860183716	Train_PPYoloELoss/loss: 1.021917700767517	Valid_PPYoloELoss/loss_cls: 0.5610948204994202	Valid_PPYoloELoss/loss_iou: 0.1056412011384964	Valid_PPYoloELoss/loss_dfl: 0.7702552080154419	Valid_PPYoloELoss/loss: 1.2103255987167358	Valid_Precision@0.50:0.95: 0.3816685676574707	Valid_Recall@0.50:0.95: 0.765494167804718	Valid_mAP@0.50:0.95: 0.7032985091209412	Valid_F1@0.50:0.95: 0.4884331226348877	Valid_Precision@0.50: 0.44445663690567017	Valid_Recall@0.50: 0.9362061619758606	Valid_mAP@0.50: 0.8853880763053894	Valid_F1@0.50: 0.5756772756576538	Inference_Time: 6549.45263671875	
+
+Epoch 144 (145/150)  - LR/Param_group_0: 0.00010355382127175106	LR/Param_group_1: 0.00010355382127175106	
+
+Epoch 145 (146/150)  - Train_PPYoloELoss/loss_cls: 0.4992518424987793	Train_PPYoloELoss/loss_iou: 0.07788604497909546	Train_PPYoloELoss/loss_dfl: 0.6598092317581177	Train_PPYoloELoss/loss: 1.0238713026046753	Valid_PPYoloELoss/loss_cls: 0.5619500279426575	Valid_PPYoloELoss/loss_iou: 0.10573536902666092	Valid_PPYoloELoss/loss_dfl: 0.7705874443054199	Valid_PPYoloELoss/loss: 1.2115821838378906	Valid_Precision@0.50:0.95: 0.382396399974823	Valid_Recall@0.50:0.95: 0.7651464939117432	Valid_mAP@0.50:0.95: 0.7026429772377014	Valid_F1@0.50:0.95: 0.4886535406112671	Valid_Precision@0.50: 0.44534537196159363	Valid_Recall@0.50: 0.9362061619758606	Valid_mAP@0.50: 0.8856627941131592	Valid_F1@0.50: 0.5760020017623901	Inference_Time: 6589.5927734375	
+
+Epoch 145 (146/150)  - LR/Param_group_0: 0.00010246956646015607	LR/Param_group_1: 0.00010246956646015607	
+
+Epoch 146 (147/150)  - Train_PPYoloELoss/loss_cls: 0.4987601935863495	Train_PPYoloELoss/loss_iou: 0.07699981331825256	Train_PPYoloELoss/loss_dfl: 0.6616103053092957	Train_PPYoloELoss/loss: 1.0220649242401123	Valid_PPYoloELoss/loss_cls: 0.5615400671958923	Valid_PPYoloELoss/loss_iou: 0.10582752525806427	Valid_PPYoloELoss/loss_dfl: 0.770566999912262	Valid_PPYoloELoss/loss: 1.2113925218582153	Valid_Precision@0.50:0.95: 0.38207292556762695	Valid_Recall@0.50:0.95: 0.7636564373970032	Valid_mAP@0.50:0.95: 0.7029626369476318	Valid_F1@0.50:0.95: 0.48828125	Valid_Precision@0.50: 0.4457140564918518	Valid_Recall@0.50: 0.9357516169548035	Valid_mAP@0.50: 0.885083794593811	Valid_F1@0.50: 0.5765162706375122	Inference_Time: 6570.53955078125	
+
+Epoch 146 (147/150)  - LR/Param_group_0: 0.00010158165921262081	LR/Param_group_1: 0.00010158165921262081	
+
+Epoch 147 (148/150)  - Train_PPYoloELoss/loss_cls: 0.4919549524784088	Train_PPYoloELoss/loss_iou: 0.07778382301330566	Train_PPYoloELoss/loss_dfl: 0.6596587896347046	Train_PPYoloELoss/loss: 1.0162433385849	Valid_PPYoloELoss/loss_cls: 0.5644376873970032	Valid_PPYoloELoss/loss_iou: 0.10595769435167313	Valid_PPYoloELoss/loss_dfl: 0.7711281776428223	Valid_PPYoloELoss/loss: 1.2148958444595337	Valid_Precision@0.50:0.95: 0.385134756565094	Valid_Recall@0.50:0.95: 0.7633077502250671	Valid_mAP@0.50:0.95: 0.7024544477462769	Valid_F1@0.50:0.95: 0.4903427064418793	Valid_Precision@0.50: 0.44975611567497253	Valid_Recall@0.50: 0.9359597563743591	Valid_mAP@0.50: 0.8846818208694458	Valid_F1@0.50: 0.5794818997383118	Inference_Time: 6526.392578125	
+
+Epoch 147 (148/150)  - LR/Param_group_0: 0.00010089048908572536	LR/Param_group_1: 0.00010089048908572536	
+
+Epoch 148 (149/150)  - Train_PPYoloELoss/loss_cls: 0.5012093782424927	Train_PPYoloELoss/loss_iou: 0.07805515080690384	Train_PPYoloELoss/loss_dfl: 0.6632713079452515	Train_PPYoloELoss/loss: 1.0279839038848877	Valid_PPYoloELoss/loss_cls: 0.5657554268836975	Valid_PPYoloELoss/loss_iou: 0.10601278394460678	Valid_PPYoloELoss/loss_dfl: 0.7705358862876892	Valid_PPYoloELoss/loss: 1.2160555124282837	Valid_Precision@0.50:0.95: 0.3869152367115021	Valid_Recall@0.50:0.95: 0.7641624808311462	Valid_mAP@0.50:0.95: 0.7024828195571899	Valid_F1@0.50:0.95: 0.49214982986450195	Valid_Precision@0.50: 0.4513419270515442	Valid_Recall@0.50: 0.9345861673355103	Valid_mAP@0.50: 0.8842019438743591	Valid_F1@0.50: 0.5807943940162659	Inference_Time: 6560.39111328125	
+
+Epoch 148 (149/150)  - LR/Param_group_0: 0.0001003963593204575	LR/Param_group_1: 0.0001003963593204575	
+
+Epoch 149 (150/150)  - Train_PPYoloELoss/loss_cls: 0.5827849507331848	Train_PPYoloELoss/loss_iou: 0.09526868909597397	Train_PPYoloELoss/loss_dfl: 0.7145931720733643	Train_PPYoloELoss/loss: 1.1782535314559937	Valid_PPYoloELoss/loss_cls: 0.5704270005226135	Valid_PPYoloELoss/loss_iou: 0.10835769772529602	Valid_PPYoloELoss/loss_dfl: 0.7796744704246521	Valid_PPYoloELoss/loss: 1.23115873336792	Valid_Precision@0.50:0.95: 0.3530850112438202	Valid_Recall@0.50:0.95: 0.7556394338607788	Valid_mAP@0.50:0.95: 0.6919646263122559	Valid_F1@0.50:0.95: 0.4614240825176239	Valid_Precision@0.50: 0.418190598487854	Valid_Recall@0.50: 0.9385172128677368	Valid_mAP@0.50: 0.8793278932571411	Valid_F1@0.50: 0.5531957149505615	Inference_Time: 6545.34130859375	
+
+Epoch 149 (150/150)  - LR/Param_group_0: 0.00010009948670917037	LR/Param_group_1: 0.00010009948670917037	
