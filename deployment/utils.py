@@ -120,7 +120,7 @@ def visualize(img):
 
 if __name__ == "__main__": 
 
-    filepath = r"img.jpg"
+    filepath = r"C:\Users\40501\Documents\USM\Sem 4\CDS590\Image\SDSM_AOI\annotation\B5nm-6228X11822-61um-BG_DP1672999_10_2_11_BG08_Contamination_13.jpg"
 
     with open(filepath, "rb") as fh:
         buf = io.BytesIO(fh.read())

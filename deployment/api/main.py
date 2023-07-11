@@ -69,7 +69,8 @@ class Detection:
             r_confs.append(confs[i]*100*10000)
             r_boxes.append(boxes[i].tolist())
 
-        return {'boxes' : r_boxes, 'confidences': r_confs, 'classes': r_class_ids}
+        # return {'boxes' : r_boxes, 'confidences': r_confs, 'classes': r_class_ids}
+        return {'boxes' : r_boxes, 'classes': r_class_ids}
 
     def __call__(self,
         image: ndarray, 
