@@ -1,4 +1,4 @@
-# Detection of Defects in Die Preparation Process.
+# Detection of Defects in Semiconductor Die Preparation Process.
 ## Introduction
 The report is about a consultancy project and practicum for the course CDS590 Consultancy Project & Practicum, provided by School of Computer Sciences, USM. 
 ## Objectives
